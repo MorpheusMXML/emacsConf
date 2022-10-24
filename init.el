@@ -281,7 +281,7 @@
 
 (use-package magit)
 
-(use-package evil-magit)
+;; (use-package evil-magit)
 
 
 (custom-set-variables
