@@ -287,7 +287,7 @@
   :config
   (evil-collection-init))
 ;; (use-package evil-magit)
-
+;; This is the testasknaöskfdnöadljfn
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
