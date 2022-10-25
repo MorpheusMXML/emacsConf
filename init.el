@@ -281,7 +281,11 @@
 
 (use-package magit)
 
-(use-package evil-collection)
+(use-package evil-collection
+  :after evil
+  :ensure t
+  :config
+  (evil-collection-init))
 ;; (use-package evil-magit)
 
 
