@@ -347,10 +347,10 @@ unreadable. Returns the names of envvars that were changed."
 
 ;;; Keychain Environment
 
-(use-package keychain-environment
-  :ensure t
-  :config
-  (keychain-refresh-environment))
+;; (use-package keychain-environment
+;;   :ensure t
+;;   :config
+;;   (keychain-refresh-environment))
 
 (setq epa-pinentry-mode 'loopback)
 
