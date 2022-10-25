@@ -288,12 +288,19 @@
   (evil-collection-init))
 ;; (use-package evil-magit)
 
+;;; Exec Path From Shell
+
 (use-package exec-path-from-shell
   :ensure t
-  :if (memq window-system '(mac ns x))
   :config
-  (setq exec-path-from-shell-variables '("PATH" "GOPATH"))
   (exec-path-from-shell-initialize))
+
+;;; Keychain Environment
+
+(use-package keychain-environment
+  :ensure t
+  :config
+  (keychain-refresh-environment))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -303,7 +310,7 @@
  '(custom-safe-themes
    '("aec7b55f2a13307a55517fdf08438863d694550565dee23181d2ebd973ebd6b8" default))
  '(package-selected-packages
-   '(exec-path-from-shell evil-collection magit counsel-projectile projectile drag-stuff evil-nerd-commenter hydra which-key use-package undo-tree spacemacs-theme rainbow-delimiters ivy-rich helpful general evil doom-themes doom-modeline counsel company command-log-mode ace-window)))
+   '(keychain-environment exec-path-from-shell evil-collection magit counsel-projectile projectile drag-stuff evil-nerd-commenter hydra which-key use-package undo-tree spacemacs-theme rainbow-delimiters ivy-rich helpful general evil doom-themes doom-modeline counsel company command-log-mode ace-window)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
