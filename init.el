@@ -24,7 +24,7 @@
 
 ;; Make ESC quit prompts
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
-;; this is a TEST
+
 ;; Initialize package sources
 (require 'package)
 
