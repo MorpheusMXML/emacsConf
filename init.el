@@ -1,7 +1,25 @@
+;; install straight.el
+(defvar bootstrap-version)
+(let ((bootstrap-file
+       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+      (bootstrap-version 5))
+  (unless (file-exists-p bootstrap-file)
+    (with-current-buffer
+        (url-retrieve-synchronously
+         "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
+         'silent 'inhibit-cookies)
+      (goto-char (point-max))
+      (eval-print-last-sexp)))
+  (load bootstrap-file nil 'nomessage))
 
 ;; You will most likely need to adjust this font size for your system!
 (defvar runemacs/default-font-size 145)
 
+;;Install Use-Package
+(straight-use-package 'use-package)
+
+(use-package straight
+  :custom (straight-use-package-by-default t))
 
 (setq inhibit-startup-message t)
 ;; set keys for Apple keyboard, for emacs in OS X
@@ -24,22 +42,22 @@
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
 
 ;; Initialize package sources
-(require 'package)
+;(require 'package)
 
-(setq package-archives '(("melpa" . "https://melpa.org/packages/")
-                         ("org" . "https://orgmode.org/elpa/")
-                         ("elpa" . "https://elpa.gnu.org/packages/")))
+;(setq package-archives '(("melpa" . "https://melpa.org/packages/")
+;                         ("org" . "https://orgmode.org/elpa/")
+;                         ("elpa" . "https://elpa.gnu.org/packages/")))
 
-(package-initialize)
-(unless package-archive-contents
- (package-refresh-contents))
+;(package-initialize)
+;(unless package-archive-contents
+; (package-refresh-contents))
 
 ;; Initialize use-package on non-Linux platforms
-(unless (package-installed-p 'use-package)
-   (package-install 'use-package))
+;(unless (package-installed-p 'use-package)
+;   (package-install 'use-package))
 
-(require 'use-package)
-(setq use-package-always-ensure t)
+;(require 'use-package)
+;(setq use-package-always-ensure t)
 
 (column-number-mode)
 (global-display-line-numbers-mode t)
@@ -55,8 +73,7 @@
 
 (use-package ivy
   :diminish
-  :bind (("C-s" . swiper)
-         :map ivy-minibuffer-map
+  :bind (("C-s" . swiper)         :map ivy-minibuffer-map
          ("TAB" . ivy-alt-done)
          ("C-l" . ivy-alt-done)
          ("C-j" . ivy-next-line)
@@ -70,7 +87,6 @@
          ("C-d" . ivy-reverse-i-search-kill))
   :config
   (ivy-mode 1))
-
 (use-package doom-modeline
   :init (doom-modeline-mode 1)
   :custom ((doom-modeline-height 15))) 
@@ -88,9 +104,7 @@
   :config
   (setq which-key-idle-delay 1))
 
-(use-package ivy-rich
-  :init
-  (ivy-rich-mode 1))
+
 
 (use-package counsel
   :bind (("M-x" . counsel-M-x)
@@ -99,6 +113,11 @@
 	 :map minibuffer-local-map
 	 ("C-r" . 'counsel-minibuffer-history)))
 
+(use-package ivy-rich
+  :straight t
+  :after counsel
+  :init
+  (ivy-rich-mode 1))
 
 (use-package helpful
   :custom
@@ -112,6 +131,10 @@
 
 (mac-auto-operator-composition-mode)
 
+(use-package undo-fu)
+(use-package undo-fu-session)
+(use-package vundo)
+
 ;; EVIL:
 ;; depends on: goto-chg, undo-tree
 
@@ -119,6 +142,7 @@
   :init
   (setq evil-want-integration t)
   (setq evil-want-keybinding nil)
+  (setq evil-undo-system 'undo-fu)
   (setq evil-want-C-u-scroll t)
   (setq evil-want-C-i-jump nil)
   :config
@@ -130,6 +154,27 @@
   ;use j and k to jump to next Visual line if line is split and not jump to actual Line
   (evil-global-set-key 'motion "j" 'evil-next-visual-line)
   (evil-global-set-key 'motion "k" 'evil-previous-visual-line))
+
+;; https://github.com/emacs-evil/evil/issues/1288
+;; Credit goes to: https://github.com/nnicandro
+;; Fix for the broken org-src-tab-acts-natively functionality
+;; Tab in fact does nothing in src blocks if evil is enabled
+(defun evil-org-insert-state-in-edit-buffer (fun &rest args)
+  "Bind `evil-default-state' to `insert' before calling FUN with ARGS."
+  (let ((evil-default-state 'insert)
+        ;; Force insert state
+        evil-emacs-state-modes
+        evil-normal-state-modes
+        evil-motion-state-modes
+        evil-visual-state-modes
+        evil-operator-state-modes
+        evil-replace-state-modes)
+    (apply fun args)
+    (evil-refresh-cursor)))
+
+(advice-add 'org-babel-do-key-sequence-in-edit-buffer
+            :around #'evil-org-insert-state-in-edit-buffer)
+
 
 (use-package general)
 (general-create-definer mabr-leader
@@ -257,7 +302,11 @@
   :keymaps 'company-mode-map
   "M-RET" 'company-search-candidates)
 
-(setq aw-keys '(?1 ?2 ?3 ?4 ?5 ?6 ?7 ?8 ?9))
+
+;; ACE-WINDOW: jump between windows faster
+(straight-use-package 'ace-window)
+(setq aw-scope 'frame
+      aw-keys '(?1 ?2 ?3 ?4 ?5 ?6 ?7 ?8 ?9))
 
 (use-package projectile
   :ensure t
@@ -279,11 +328,21 @@
 
 (use-package magit)
 
-(use-package evil-collection
-  :after evil
-  :ensure t
-  :config
-  (evil-collection-init))
+;; (use-package evil-collection
+;;   :after evil
+;;   :ensure t
+;;   :config
+;;   (evil-collection-init))
+
+;; EVIL-COLLECTION: improved evil support for multiple packages
+(straight-use-package 'evil-collection)
+;; variables
+(setq evil-collection-setup-minibuffer t
+      evil-collection-mode-list
+      '(ibuffer help calc nov man calendar ivy minibuffer dired debug
+        doc-view arc-mode magit vterm))
+;; start mode
+(evil-collection-init)
 
 ;; Code to replace exec-path-from-shell
 ;; Need to create file in $HOME/.emacs.d/.local/env
