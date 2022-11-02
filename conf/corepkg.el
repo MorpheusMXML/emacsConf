@@ -98,7 +98,7 @@
 
 ;; -----------------------------------------------------------------------------------------------------------
 ;; EVIL-COLLECTION: improved evil support for multiple packages
-(straight-use-package 'evil-collection)
+(use-package evil-collection)
 ;; variables
 (setq evil-collection-setup-minibuffer t
       evil-collection-mode-list
