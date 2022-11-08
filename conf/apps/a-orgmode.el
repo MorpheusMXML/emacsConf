@@ -1,0 +1,161 @@
+
+;; Org Mode Configuration ------------------------------------------------------
+
+;; There was a long discussion on reddit that this package slows
+;; down the redisplay optimizations of emacs
+;; https://old.reddit.com/r/emacs/comments/p9yjgq/turn_off_fontlock_under_cursor/ha6zor6/
+;; ORG-APPEAR: shows emphasis symbols when required
+(use-package org-appear)
+(setq org-appear-autolinks t
+      org-appear-autosubmarkers t
+      org-appear-autoentities t
+      org-appear-autokeywords t
+      org-appear-inside-latex t)
+(add-hook 'org-mode-hook 'org-appear-mode)
+
+;; ORG-DOWNLOAD: insert screenshots on the fly
+(use-package org-download
+  :after org
+  :straight t
+  :config
+;; (setq org-download-screenshot-file "~/sync/screenshots/tmp/orgcapture.png"
+;;       org-download-screenshot-method "maim -k -s %s"
+;;       org-download-image-attr-list '("#+ATTR_ORG: :width 600")
+;;       org-download-annotate-function (lambda(link) ""))
+;; (setq-default org-download-image-dir "./ORGPICS")
+
+  (setq org-download-screenshot-method "screencapture -i %s")
+  (setq-default org-download-image-dir "./img")
+  (add-hook 'dired-mode-hook 'org-download-enable))
+(require 'org-download)
+
+
+;; (use-package org-bullets
+;;   :after org
+;;   :hook (org-mode . org-bullets-mode)
+;;   :custom
+;;   (org-bullets-bullet-list '("●" "○" "◉" "●" "○" "◉")))
+
+(defun mabr/org-mode-setup ()
+  (org-indent-mode)
+  (variable-pitch-mode 1)
+  (visual-line-mode 1))
+
+;; EVIL-ORG: more org bindings
+(use-package evil-org)
+(add-hook 'org-mode-hook 'evil-org-mode)
+(with-eval-after-load 'org-mode
+  (evil-org-set-key-theme '(navigation insert textobjects additional calendar)))
+
+;; (defun mabr/org-font-setup ()
+;;   ;; Replace list hyphen with dot
+;;   (font-lock-add-keywords 'org-mode
+;;                           '(("^ *\\([-]\\) "
+;;                              (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
+
+;;   ;; Set faces for heading levels
+;;   (dolist (face '((org-level-1 . 1.2)
+;;                   (org-level-2 . 1.1)
+;;                   (org-level-3 . 1.05)
+;;                   (org-level-4 . 1.0)
+;;                   (org-level-5 . 1.1)
+;;                   (org-level-6 . 1.1)
+;;                   (org-level-7 . 1.1)
+;;                   (org-level-8 . 1.1)))
+;;     (set-face-attribute (car face) nil :font "Fira Code Retina" :weight 'regular :height (cdr face)))
+
+;;   ;; Ensure that anything that should be fixed-pitch in Org files appears that way
+;;   (set-face-attribute 'org-block nil :foreground nil :inherit 'fixed-pitch)
+;;   (set-face-attribute 'org-code nil   :inherit '(shadow fixed-pitch))
+;;   (set-face-attribute 'org-table nil   :inherit '(shadow fixed-pitch))
+;;   (set-face-attribute 'org-verbatim nil :inherit '(shadow fixed-pitch))
+;;   (set-face-attribute 'org-special-keyword nil :inherit '(font-lock-comment-face fixed-pitch))
+;;   (set-face-attribute 'org-meta-line nil :inherit '(font-lock-comment-face fixed-pitch))
+;;   (set-face-attribute 'org-checkbox nil :inherit 'fixed-pitch))
+
+(defun mabr/org-mode-visual-fill ()
+  (setq visual-fill-column-width 100
+        visual-fill-column-center-text t)
+  (visual-fill-column-mode 1))
+
+(use-package visual-fill-column
+  :hook (org-mode . mabr/org-mode-visual-fill))
+
+;;-------------------------------------------------------------------------------------------------
+;; ORG Settings
+(setq org-duration-format 'h:mm
+
+      ;;Export
+      org-export-with-email t
+
+      ;; Visuals
+      org-pretty-entities t
+      org-src-fontify-natively t
+      org-src-preserve-indentation t
+      org-ellipsis " ↷"
+      org-hide-emphasis-markers t
+      org-startup-with-inline-images t
+      org-startup-with-latex-preview t
+      org-image-actual-width nil
+
+      ;; TODOS
+      org-todo-keywords
+      '((sequence "TODO(t)" "|" "DONE(d)")
+        (type "NEXT(n)")
+        (type "MEET(m)")
+        (type "IDEA(i)"))
+            org-todo-keyword-faces
+      '(("TODO" :inherit org-todo :weight bold)
+        ("DONE" :inherit org-done :weight bold)
+        ("NEXT" :weight bold)
+        ("MEET" :weight bold)
+        ("IDEA" :foreground "#cea7f0" :weight bold))
+      org-use-fast-todo-selection t
+      org-fontify-todo-headline nil
+      org-fontify-done-headline nil)
+
+;; KEYBINDINGS
+(general-def
+  :states 'normal
+  :keymaps 'org-mode-map
+  ;; "TAB" 'org-cycle
+  "=" 'mabr/format-buffer)
+
+(mabr-leader
+  :states 'normal
+  :definer 'minor-mode
+  :keymaps 'org-src-mode
+  "'" 'org-edit-src-exit)
+
+(mabr-leader
+  :states '(normal visual)
+  :keymaps 'org-mode-map
+  "'" 'org-edit-src-code
+  "SPC h" 'org-insert-heading
+  "SPC p" 'fill-paragraph
+  "SPC i" '(:ignore t :which-key "Insert")
+  "SPC i s" 'org-download-screenshot
+  "SPC i t" 'org-todo
+  "SPC i l" 'org-insert-link
+  "SPC s l" 'org-store-link
+  "SPC t" '(:ignore t :which-key "Toggle")
+  "SPC t i" 'org-toggle-inline-images
+  "SPC t l" 'org-latex-preview
+  "SPC c" '(:ignore t :which-key "C Funktions (clock, execute)")
+  "SPC c i" 'org-clock-in
+  "SPC c o" 'org-clock-out
+  "SPC c l" 'org-clock-in-last
+  "SPC c c" 'org-babel-execute-src-block
+  "SPC r" '(:ignore t :which-key "Remove")
+  "SPC r r" 'org-babel-remove-result
+  "SPC r a" (lambda () (interactive) (org-babel-remove-result-one-or-many t))
+  "SPC o" 'org-open-at-point
+  "SPC e" 'org-export-dispatch)
+
+(general-def
+  :states '(normal visual insert)
+  :keymaps 'org-mode-map
+  "C-k" 'org-previous-visible-heading
+  "C-j" 'org-next-visible-heading)
+
+(provide 'a-orgmode)

@@ -1,7 +1,13 @@
 ;; DIRED: Filebrowser
 (use-package dired-narrow)
-(require 'dired-async)
-(dired-async-mode 0)
+;; (require 'dired-async)
+;; (dired-async-mode 0)
+
+(setq dired-listing-switches "-lFahv --group-directories-first"
+      dired-dwim-target t
+      delete-by-moving-to-trash t
+      dired-ls-F-marks-symlinks t)
+
 ;; Keybindings
 (general-def
   :states 'normal
@@ -20,9 +26,9 @@
   "J" 'peep-dired-scroll-page-down
   "K" 'peep-dired-scroll-page-up
   "j" 'peep-dired-next-file
-  "k" 'peep-dired-prev-file)
+  "k" 'peep-dired-prev-DIRED)
 
-;; DIRED-LAUNCH: Launch apps depending on file extension
+;; file-LAUNCH: Launch apps depending on file extension
 (use-package dired-launch)
 (setq dired-launch-command '("xdg-open"))
 (setf dired-launch-extensions-map
@@ -35,4 +41,4 @@
   :keymaps 'dired-mode-map
   "W" 'dired-launch-command)
 
-(provide 'dired)
+(provide 'a-dired)

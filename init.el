@@ -90,6 +90,7 @@ unreadable. Returns the names of envvars that were changed."
 ;;; Code to replace exec-path-from-shell
 
 (setq epa-pinentry-mode 'loopback)
+(setq insert-directory-program "gls" dired-use-ls-dired t)
 
 
 

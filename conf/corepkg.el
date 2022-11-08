@@ -1,17 +1,8 @@
 ;; -----------------------------------------------------------------------------------------------------------
 ;; ORG-MODE:
 ;;Import ORG Mode as one of the First Pkgs in order to prevent other dependencies pulling outdated versions.
-(use-package org
-  :hook (org-mode . mabr/org-mode-setup)
-  :config
-  (setq org-ellipsis " ▾")
-  (mabr/org-font-setup))
+(use-package org)
 
-(use-package org-bullets
-  :after org
-  :hook (org-mode . org-bullets-mode)
-  :custom
-  (org-bullets-bullet-list '("●" "○" "◉" "●" "○" "◉")))
 
 ;; -----------------------------------------------------------------------------------------------------------
 ;;GENERAL: Keybindings
