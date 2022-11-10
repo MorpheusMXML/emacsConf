@@ -18,12 +18,6 @@
   :after org
   :straight t
   :config
-;; (setq org-download-screenshot-file "~/sync/screenshots/tmp/orgcapture.png"
-;;       org-download-screenshot-method "maim -k -s %s"
-;;       org-download-image-attr-list '("#+ATTR_ORG: :width 600")
-;;       org-download-annotate-function (lambda(link) ""))
-;; (setq-default org-download-image-dir "./ORGPICS")
-
   (setq org-download-screenshot-method "screencapture -i %s")
   (setq-default org-download-image-dir "./img")
   (add-hook 'dired-mode-hook 'org-download-enable))
@@ -36,16 +30,16 @@
 ;;   :custom
 ;;   (org-bullets-bullet-list '("●" "○" "◉" "●" "○" "◉")))
 
-(defun mabr/org-mode-setup ()
-  (org-indent-mode)
-  (variable-pitch-mode 1)
-  (visual-line-mode 1))
+;; (defun mabr/org-mode-setup ()
+;;   (org-indent-mode)
+;;   (variable-pitch-mode 1)
+;;   (visual-line-mode 1))
 
 ;; EVIL-ORG: more org bindings
 (use-package evil-org)
 (add-hook 'org-mode-hook 'evil-org-mode)
 (with-eval-after-load 'org-mode
-  (evil-org-set-key-theme '(navigation insert textobjects additional calendar)))
+  (evil-org-set-key-theme '(navigation todo insert textobjects additional calendar)))
 
 ;; (defun mabr/org-font-setup ()
 ;;   ;; Replace list hyphen with dot
@@ -63,7 +57,7 @@
 ;;                   (org-level-7 . 1.1)
 ;;                   (org-level-8 . 1.1)))
 ;;     (set-face-attribute (car face) nil :font "Fira Code Retina" :weight 'regular :height (cdr face)))
-
+ 
 ;;   ;; Ensure that anything that should be fixed-pitch in Org files appears that way
 ;;   (set-face-attribute 'org-block nil :foreground nil :inherit 'fixed-pitch)
 ;;   (set-face-attribute 'org-code nil   :inherit '(shadow fixed-pitch))
@@ -81,10 +75,19 @@
 (use-package visual-fill-column
   :hook (org-mode . mabr/org-mode-visual-fill))
 
+(evil-set-initial-state 'org-agenda-mode 'normal)
 ;;-------------------------------------------------------------------------------------------------
 ;; ORG Settings
 (setq org-duration-format 'h:mm
 
+      ;; Agenda
+      org-agenda-files '("~/org/Agenda/")
+      org-agenda-restore-windows-after-quit t
+      org-agenda-default-appointment-duration 30
+      org-agenda-start-on-weekday nil
+      org-agenda-custom-commands '(("c" "MABR Agenda View"
+				    ((agenda "")
+				     (alltodo ""))))
       ;;Export
       org-export-with-email t
 

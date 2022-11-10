@@ -34,12 +34,28 @@
 (message "Done loading: programming.el")
 (require 'ui)
 (message "Done loading: ui.el")
-;; (require 'functions)
-;; (message "Done loading: functions.el")
-;; (require 'fixes)
-;; (message "Done loading: fixes.el")
-;; (require 'temp)
-;; (message "Done loading: temp.el")
+(require 'utils)
+(message "Done loading: utils.el")
+(require 'functions)
+(message "Done loading: functions.el")
+(require 'variables)
+(message "Done loading: variables.el")
+
+;; Don't litter my init file
+(setq custom-file (expand-file-name "custom.el" user-emacs-directory))
+(load custom-file 'noerror)
+
+(set-terminal-coding-system 'utf-8)
+(set-keyboard-coding-system 'utf-8)
+(prefer-coding-system 'utf-8)
+
+;; ;; KEYBINDING standard copy Paste
+;; (global-set-key (kbd "M-c") 'kill-ring-save) ; ⌘-c = Copy
+;; (global-set-key (kbd "M-x") 'kill-region) ; ⌘-x = Cut
+;; (global-set-key (kbd "M-v") 'yank) ; ⌘-v = Paste
+;; (global-set-key (kbd "M-a") 'mark-whole-buffer) ; ⌘-a = Select all
+;; (global-set-key (kbd "M-z") 'undo) ; ⌘-z = Undo
+;; (global-set-key (kbd "≈") 'execute-extended-command) ; Replace ≈ with whatever your option-x produces
 
 ;; Code to replace exec-path-from-shell
 ;; Need to create file in $HOME/.emacs.d/.local/env
@@ -91,23 +107,4 @@ unreadable. Returns the names of envvars that were changed."
 
 (setq epa-pinentry-mode 'loopback)
 (setq insert-directory-program "gls" dired-use-ls-dired t)
-
-
-
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(custom-safe-themes
-   '("aec7b55f2a13307a55517fdf08438863d694550565dee23181d2ebd973ebd6b8" default))
- '(package-selected-packages
-   '(keychain-environment exec-path-from-shell evil-collection magit counsel-projectile projectile drag-stuff evil-nerd-commenter hydra which-key use-package undo-tree spacemacs-theme rainbow-delimiters ivy-rich helpful general evil doom-themes doom-modeline counsel company command-log-mode ace-window)))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
-
-
+(setq mac-pass-command-to-system nil)

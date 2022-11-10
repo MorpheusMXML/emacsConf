@@ -24,7 +24,9 @@
 ;; YASNIPPET: Code Snippets
 
 (use-package yasnippet)
-(use-package yasnippet-snippets)
+(use-package yasnippet-snippets
+  :straight t
+  :defer t)
 
 (require 'yasnippet)
 (yas-reload-all)
@@ -36,7 +38,12 @@
 
 ;;----------------------------------------------------------------------------------------------------
 ;; PROJECTILE: Project Management
-(use-package projectile)
+(use-package projectile
+  :straight t
+  :defer t
+  :config
+  (projectile-mode))
+
 (use-package counsel-projectile
   :config (counsel-projectile-mode))
 

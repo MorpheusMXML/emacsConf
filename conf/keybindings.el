@@ -1,13 +1,13 @@
 ;; (defvar mabr/git "~/git")
 (defvar mabr/emacsconf "~/.emacs.d/conf")
 ;; (defvar mabr/dotfiles "~/")
-(defvar mabr/orgfiles  "~/Documents/Dev/OrgFiles")
+(defvar mabr/orgfiles  "~/org")
 
 
 ;; Make ESC quit prompts
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
 
-;; all rights belong to my beloved friend phga <3 du würschtal
+;; all rights belong to my beloved friend mabr <3 du würschtal
 ;(defun mabr/keymap-company ()
 ;  (interactive)
 ;  (general-def
@@ -23,18 +23,17 @@
 
   "SPC" '(:ignore t :which-key "Minormode Binds")
   "SPC p" 'fill-paragraph
-  "SPC SPC" 'counsel-m-x
+  "SPC SPC" 'counsel-M-x
    
   "a" 'ace-select-window
   "d" 'dired
   "D" 'dired-other-window
   "f" 'counsel-find-file
-  "F" 'phga/find-file-sudo
+  "F" 'mabr/find-file-sudo
   "g" 'magit-status
   "h" 'evil-avy-goto-line
   "i" 'counsel-imenu
-  "t" '(hydra-text-scale/body :which-key "Scale Text")
-  "y" 'counsel-yank-pop
+   "y" 'counsel-yank-pop
 
   "8" 'insert-char
 
@@ -76,12 +75,40 @@
   ;; edit stuff
   "e" '(:ignore t :which-key "Edit")
   "e c" '((lambda() (interactive) (dired mabr/emacsconf)) :which-key "edit emacs config")
-  ;; "e d" '((lambda() (interactive) (dired phga/dotfiles)) :which-key "edit dotfiles")
+  ;; "e d" '((lambda() (interactive) (dired mabr/dotfiles)) :which-key "edit dotfiles")
   "e o" '((lambda() (interactive) (dired mabr/orgfiles)) :which-key "edit org files")
-  ;; "e g" '((lambda() (interactive) (dired phga/git)) :which-key "edit git files")
+  ;; "e g" '((lambda() (interactive) (dired mabr/git)) :which-key "edit git files")
 
-  "e m" '(gnus :which-key "edit mail")
+  "e m" '(gnus :which-key "Edit mail")
 
+
+ "q" '(:ignore t :which-key "Quality :)")
+  "q t" 'mabr/cycle-themes
+  "q s" '(hydra-text-scale/body :which-key "Scale Text")
+
+  "t" '(:ignore t :which-key "Tools")
+  "t a" 'org-agenda
+  "t d" 'dictcc
+  "t c" 'calc
+  "t m" 'man
+  "t k" 'calendar
+  "t b" 'ibuffer
+  "t r" '((lambda () (interactive) (counsel-rg nil default-directory))
+          :which-key "Ripgrep in current folder")
+  "t R" '((lambda (regex) (interactive "MFile Search: ")
+            (shell-command (format "find * -type f -name '%s'" regex)))
+          :which-key "Search for files in current folder")
+  "t t" '(mabr/run-terminal-here :which-key "Alacritty in current dir")
+  "t s" 'mabr/new-shell
+  "t v" 'mabr/new-vterm
+  "t u" 'vundo
+  "t c" 'org-capture
+  "t i" '(:ignore t :which-key "Insert")
+  "t i t" 'mabr/insert-current-timestamp
+
+  "m" '(:ignore t :which-key "Modes")
+  "m s" 'flyspell-mode
+  
   "?" '(:ignore t :which-key "Describe")
   "? v" 'describe-variable
   "? f" 'describe-function
