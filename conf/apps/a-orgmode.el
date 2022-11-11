@@ -152,6 +152,20 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
     (if pos (goto-char pos))
     (if backwards (goto-char (line-beginning-position)))))
 
+;; ORG-CLOCK
+(setq org-clock-history-length 23
+      org-clock-in-resume t
+      org-drawers '("PROPERTIES" "LOGBOOK")
+      org-clock-into-drawer t
+      org-clock-out-remove-zero-time-clocks t
+      org-clock-out-when-done t
+      org-clock-persist 'history
+      org-clock-persist-query-resume nil
+      org-clock-auto-clock-resolution 'when-no-clock-is-running
+      org-clock-report-include-clocking-task t)
+
+(org-clock-persistence-insinuate)
+
 ;; KEYBINDINGS
 (general-def
   :states 'normal

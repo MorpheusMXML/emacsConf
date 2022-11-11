@@ -18,6 +18,9 @@
 (use-package straight
   :custom (straight-use-package-by-default t))
 
+;; Don't litter my init file
+(setq custom-file (expand-file-name "custom.el" user-emacs-directory))
+(load custom-file 'noerror)
 
 (push (concat user-emacs-directory "conf") load-path)
 
@@ -41,9 +44,6 @@
 (require 'variables)
 (message "Done loading: variables.el")
 
-;; Don't litter my init file
-(setq custom-file (expand-file-name "custom.el" user-emacs-directory))
-(load custom-file 'noerror)
 
 (set-terminal-coding-system 'utf-8)
 (set-keyboard-coding-system 'utf-8)

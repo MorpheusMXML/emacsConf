@@ -28,6 +28,8 @@
 (column-number-mode)
 (global-display-line-numbers-mode t)
 
+(rainbow-mode t)
+
 ;; Disable line numbers for some modes
 (dolist (mode '(org-mode-hook
                 term-mode-hook))
@@ -57,6 +59,8 @@
   :init (load-theme 'shanty-themes-dark))
 (setq mabr/dark-theme 'shanty-themes-dark)
 (setq mabr/light-theme 'shanty-themes-light)
+
+(set-face-attribute 'dired-ignored nil :foreground "#546a7b")
 
 (setq mabr/current-theme mabr/dark-theme)
 (load-theme mabr/current-theme t)
