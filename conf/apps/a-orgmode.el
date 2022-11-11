@@ -30,10 +30,6 @@
 ;;   :custom
 ;;   (org-bullets-bullet-list '("●" "○" "◉" "●" "○" "◉")))
 
-;; (defun mabr/org-mode-setup ()
-;;   (org-indent-mode)
-;;   (variable-pitch-mode 1)
-;;   (visual-line-mode 1))
 
 ;; EVIL-ORG: more org bindings
 (use-package evil-org)
@@ -41,31 +37,18 @@
 (with-eval-after-load 'org-mode
   (evil-org-set-key-theme '(navigation todo insert textobjects additional calendar)))
 
-;; (defun mabr/org-font-setup ()
-;;   ;; Replace list hyphen with dot
-;;   (font-lock-add-keywords 'org-mode
-;;                           '(("^ *\\([-]\\) "
-;;                              (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
 
-;;   ;; Set faces for heading levels
-;;   (dolist (face '((org-level-1 . 1.2)
-;;                   (org-level-2 . 1.1)
-;;                   (org-level-3 . 1.05)
-;;                   (org-level-4 . 1.0)
-;;                   (org-level-5 . 1.1)
-;;                   (org-level-6 . 1.1)
-;;                   (org-level-7 . 1.1)
-;;                   (org-level-8 . 1.1)))
+  ;; Set faces for heading levels
+  ;; (dolist (face '((org-level-1 . 1.2)
+  ;;                 (org-level-2 . 1.1)
+  ;;                 (org-level-3 . 1.05)
+  ;;                 (org-level-4 . 1.0)
+  ;;                 (org-level-5 . 1.1)
+  ;;                 (org-level-6 . 1.1)
+  ;;                 (org-level-7 . 1.1)
+  ;;                 (org-level-8 . 1.1)))
 ;;     (set-face-attribute (car face) nil :font "Fira Code Retina" :weight 'regular :height (cdr face)))
  
-;;   ;; Ensure that anything that should be fixed-pitch in Org files appears that way
-;;   (set-face-attribute 'org-block nil :foreground nil :inherit 'fixed-pitch)
-;;   (set-face-attribute 'org-code nil   :inherit '(shadow fixed-pitch))
-;;   (set-face-attribute 'org-table nil   :inherit '(shadow fixed-pitch))
-;;   (set-face-attribute 'org-verbatim nil :inherit '(shadow fixed-pitch))
-;;   (set-face-attribute 'org-special-keyword nil :inherit '(font-lock-comment-face fixed-pitch))
-;;   (set-face-attribute 'org-meta-line nil :inherit '(font-lock-comment-face fixed-pitch))
-;;   (set-face-attribute 'org-checkbox nil :inherit 'fixed-pitch))
 
 (defun mabr/org-mode-visual-fill ()
   (setq visual-fill-column-width 100
@@ -85,9 +68,18 @@
       org-agenda-restore-windows-after-quit t
       org-agenda-default-appointment-duration 30
       org-agenda-start-on-weekday nil
-      org-agenda-custom-commands '(("c" "MABR Agenda View"
-				    ((agenda "")
-				     (alltodo ""))))
+      ;; Build Agenda seperation with Week and Global TODOs
+      ;; Build High Prio ord Today Section only with Prio A Items in Agenda
+      org-agenda-custom-commands
+      '(("c" "Get Shit Done View"
+         ((tags "PRIORITY=\"A\""
+                ((org-agenda-skip-function '(org-agenda-skip-entry-if 'todo 'done))
+                 (org-agenda-overriding-header "Prio Today:")))
+          (agenda "")
+          (alltodo ""
+		   ((org-agenda-skip-function
+                     '(or (air-org-skip-subtree-if-priority ?A)
+                          (org-agenda-skip-if nil '(scheduled deadline)))))))))
       ;;Export
       org-export-with-email t
 
@@ -110,12 +102,55 @@
             org-todo-keyword-faces
       '(("TODO" :inherit org-todo :weight bold)
         ("DONE" :inherit org-done :weight bold)
-        ("NEXT" :weight bold)
-        ("MEET" :weight bold)
-        ("IDEA" :foreground "#cea7f0" :weight bold))
+        ("NEXT" :foreground "#A2DFED" :weight bold)
+        ("MEET" :foreground "#B95F8A":weight bold)
+        ("IDEA" :foreground "#FF7F11" :weight bold))
       org-use-fast-todo-selection t
       org-fontify-todo-headline nil
       org-fontify-done-headline nil)
+
+;; ORG Agenda Filter Prio A from Global List Function
+(defun air-org-skip-subtree-if-priority (priority)
+  "Skip an agenda subtree if it has a priority of PRIORITY.
+
+PRIORITY may be one of the characters ?A, ?B, or ?C."
+  (let ((subtree-end (save-excursion (org-end-of-subtree t)))
+        (pri-value (* 1000 (- org-lowest-priority priority)))
+        (pri-current (org-get-priority (thing-at-point 'line t))))
+    (if (= pri-value pri-current)
+        subtree-end
+      nil)))
+
+;; Function to implement Header Jumping in Agenda View
+(defun air-org-agenda-next-header ()
+  "Jump to the next header in an agenda series."
+  (interactive)
+  (air--org-agenda-goto-header))
+
+(defun air-org-agenda-previous-header ()
+  "Jump to the previous header in an agenda series."
+  (interactive)
+  (air--org-agenda-goto-header t))
+
+(defun air--org-agenda-goto-header (&optional backwards)
+  "Find the next agenda series header forwards or BACKWARDS."
+  (let ((pos (save-excursion
+               (goto-char (if backwards
+                              (line-beginning-position)
+                            (line-end-position)))
+               (let* ((find-func (if backwards
+                                     'previous-single-property-change
+                                   'next-single-property-change))
+                      (end-func (if backwards
+                                    'max
+                                  'min))
+                      (all-pos-raw (list (funcall find-func (point) 'org-agenda-structural-header)
+                                         (funcall find-func (point) 'org-agenda-date-header)))
+                      (all-pos (cl-remove-if-not 'numberp all-pos-raw))
+                      (prop-pos (if all-pos (apply end-func all-pos) nil)))
+                 prop-pos))))
+    (if pos (goto-char pos))
+    (if backwards (goto-char (line-beginning-position)))))
 
 ;; KEYBINDINGS
 (general-def
@@ -143,8 +178,9 @@
   "SPC s l" 'org-store-link
   "SPC t" '(:ignore t :which-key "Toggle")
   "SPC t i" 'org-toggle-inline-images
+
   "SPC t l" 'org-latex-preview
-  "SPC c" '(:ignore t :which-key "C Funktions (clock, execute)")
+  "SPC c" '(:ignore t :which-key "Clock, Execute")
   "SPC c i" 'org-clock-in
   "SPC c o" 'org-clock-out
   "SPC c l" 'org-clock-in-last
@@ -160,5 +196,12 @@
   :keymaps 'org-mode-map
   "C-k" 'org-previous-visible-heading
   "C-j" 'org-next-visible-heading)
+
+(general-def
+  :states '(normal visual insert)
+  :keymaps 'org-agenda-mode-map
+  "C-j" 'air-org-agenda-next-header
+  "C-k" 'air-org-agenda-previous-header
+  "C-t" 'org-agenda-todo)
 
 (provide 'a-orgmode)
