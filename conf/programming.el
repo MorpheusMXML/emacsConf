@@ -74,6 +74,80 @@
   "g ! p" 'flycheck-previous-error
   "g ! l" 'flycheck-list-errors
   )
+
+;; LSP: language server in emacs
+;; In case shit breaks -> goto github page - search for stable lable - reset to commit xxxxxx
+(use-package lsp-mode)
+(setq lsp-eldoc-render-all nil
+      read-process-output-max 1048576
+      lsp-idle-delay 0.500
+      lsp-prefer-capf t
+      lsp-enable-indentation nil
+      lsp-headerline-breadcrumb-enable-diagnostics nil)
+;; The lsp-prefer-capf variable did not work anymore and probably another company backend
+;; was the source of the weird flycheck/make errors which arised with any lsp-backend for c++
+;; This fixes the issue by changing the company backend to the one recommended by the lsp team
+(add-hook 'lsp-managed-mode-hook (lambda () (setq-local company-backends '(company-capf))))
+
+(use-package lsp-ui)
+(with-eval-after-load 'lsp (require 'lsp-ui-flycheck))
+;; https://emacs-lsp.github.io/lsp-mode/tutorials/how-to-turn-off/
+(setq lsp-enable-symbol-highlighting t
+      lsp-lens-enable nil ;; ref count
+      lsp-ui-doc-enable t
+      lsp-ui-doc-include-signature t
+      lsp-ui-doc-max-height 30
+      lsp-ui-doc-max-width 200
+      lsp-ui-peek-enable nil
+      lsp-ui-flycheck-enable t
+      lsp-ui-sideline-enable nil)
+
+;; Keybindings
+(general-def
+  :states '(normal)
+  :keymaps 'lsp-ui-doc-frame-mode-map
+  "TAB" 'lsp-ui-doc-unfocus-frame)
+
+(general-def
+  :states '(normal)
+  :keymaps 'lsp-ui-doc-mode-map
+  "TAB" 'lsp-ui-doc-focus-frame)
+
+(mabr-leader
+  :states 'normal
+  :keymaps 'lsp-mode-map
+  "SPC l i" 'lsp-organize-imports
+  "SPC l c" 'lsp-describe-session
+  "SPC l r" 'lsp-restart-workspace
+  "SPC g d" 'lsp-find-definition
+  "SPC g D" 'lsp-find-declaration
+  "SPC g t" 'lsp-goto-type-definition
+  "SPC r" 'lsp-rename
+  "SPC d" 'lsp-ui-doc-toggle
+  "SPC i" 'imenu
+  "SPC p i" 'ivy-imenu-anywhere)
+
+;; DAP: Debug Adapter Protocol is a wire protocol for communication
+;;      between client and Debug Server
+(use-package dap-mode)
+(dap-auto-configure-mode)
+
+;; DIRENV: works by invoking direnv to obtain the environment for the current file, then
+;; updating the emacs variables process-environment and exec-path
+(use-package direnv)
+(advice-add 'lsp :before #'direnv-update-environment)
+
+;; OTHER SMALL LANGUAGES: with nearly no setup
+;; JS
+;; (straight-use-package 'js2-mode)
+;; (push '("\\.\\(js\\)\\'" . js2-mode) auto-mode-alist)
+;; ;; sudo npm i -g javascript-typescript-langserver
+;; (add-hook 'js2-mode-hook #'lsp-deferred)
+
+;; STRUCTURE LANGUAGES: mostly highlighting and indent
+;; CADDY
+(use-package caddyfile-mode)
+(push '("\\(Caddyfile\\|caddy.conf\\)\\'" . caddyfile-mode) auto-mode-alist)
 ;;----------------------------------------------------------------------------------------------------
 ;; MAGIT - Mighty Git Interface
 (use-package magit)

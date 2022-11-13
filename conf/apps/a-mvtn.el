@@ -37,9 +37,10 @@
   (defun mvtn--tag-file-list-action (button)
     (mvtn-tag-file-list-open-keep-focus)))
 
-(phgas-leader
+(mabr-leader
   :states '(normal visual emacs)
   :keymaps 'override
+  "n" '(:which-key "MVTN")
   "n d" 'mvtn-jump-current-year-directory
   "n n" 'mvtn-open-note
   "n N" 'mvtn-new-note

@@ -72,12 +72,15 @@
   "k q q" 'kill-emacs
   "k k" 'kill-current-buffer
 
+  ;; buffer stuff
+  "b" '(:ignore t :which-key "Buffer (revert)")
+  "b r" 'revert-buffer
+  "b a r" 'auto-revert-mode
+
   ;; edit stuff
   "e" '(:ignore t :which-key "Edit")
   "e c" '((lambda() (interactive) (dired mabr/emacsconf)) :which-key "edit emacs config")
-  ;; "e d" '((lambda() (interactive) (dired mabr/dotfiles)) :which-key "edit dotfiles")
   "e o" '((lambda() (interactive) (dired mabr/orgfiles)) :which-key "edit org files")
-  ;; "e g" '((lambda() (interactive) (dired mabr/git)) :which-key "edit git files")
 
   "e m" '(gnus :which-key "Edit mail")
 

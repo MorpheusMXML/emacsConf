@@ -82,7 +82,7 @@
                           (org-agenda-skip-if nil '(scheduled deadline)))))))))
       ;;Export
       org-export-with-email t
-
+      vc-follow-symlinks t
       ;; Visuals
       org-pretty-entities t
       org-src-fontify-natively t

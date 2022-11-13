@@ -2,6 +2,9 @@
 
 ;; DIRED: file browser
 (require 'a-dired)
+;; MVTN: Easy Notes in ORGmode
+(require 'a-mvtn)
+(require 'a-shell)
 ;; ;; PDF-TOOLS
 ;; (require 'a-pdf)
 ;; ORGMODE 

@@ -152,7 +152,6 @@
 	 :map minibuffer-local-map
 	 ("C-r" . 'counsel-minibuffer-history)))
 
-
 ;; -----------------------------------------------------------------------------------------------------------
 ;; HELPFUL - Explanations for Functions
 (use-package helpful
