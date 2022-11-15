@@ -93,12 +93,16 @@
       org-startup-with-latex-preview t
       org-image-actual-width nil
 
+      ;; REFILE
+      org-refile-targets '(("Archive.org" :maxlevel . 1)
+			   ("Glou.org" :maxlevel . 1)
+			   ("private.org" :maxlevel . 1))
       ;; TODOS
       org-todo-keywords
-      '((sequence "TODO(t)" "|" "DONE(d)")
-        (type "NEXT(n)")
+      '((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d)")
         (type "MEET(m)")
-        (type "IDEA(i)"))
+        (type "IDEA(i)")
+	(type "READ(r)"))
             org-todo-keyword-faces
       '(("TODO" :inherit org-todo :weight bold)
         ("DONE" :inherit org-done :weight bold)
@@ -107,7 +111,30 @@
         ("IDEA" :foreground "#FF7F11" :weight bold))
       org-use-fast-todo-selection t
       org-fontify-todo-headline nil
-      org-fontify-done-headline nil)
+      org-fontify-done-headline nil
+
+
+      ;; ORG CAPTURE
+      org-directory "~/mvtn/private/stc"
+      org-capture-templates
+      `(("i" "Idea"
+         entry (file+headline ,(concat org-directory "/20220202-000000 prv.org") "Ideas")
+         "* IDEA %?\n %T\n")
+        ("n" "Note"
+         entry (file+headline ,(concat org-directory "/20220202-000000 prv.org") "Notes")
+         "* NOTE %?\n %T\n")
+        ("r" "Read later"
+         entry (file+headline ,(concat org-directory "/20220202-000000 prv.org") "Read later")
+         "* READ %?\n %T\n")
+	("t" "Capture TODO")
+        ("tp" "Private Task" entry (file+olp "~/org/Agenda/private.org" "Inbox")
+        "** TODO %?\n %U\n %a\n %i" :empty-lines 1)
+        ("tw" "Work Task" entry (file+olp "~/org/Agenda/Glou.org" "Inbox")
+        "** TODO %?\n %U\n %a\n %i" :empty-lines 1))
+
+      org-default-notes-file (concat org-directory "/20220203-000000 refile.org"))
+
+(advice-add 'org-refile :after 'org-save-all-org-buffers)
 
 ;; ORG Agenda Filter Prio A from Global List Function
 (defun air-org-skip-subtree-if-priority (priority)

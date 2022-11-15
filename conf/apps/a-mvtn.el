@@ -5,7 +5,7 @@
         '((:dir "~/mvtn/private" :name "prv" :structure
            ((:dir "flt" :datetree t) ;; Floating
             ;; BUG: Cannot be excluded by the mvtn-excluded-directories
-            ;; (:dir "log" :datetree t)
+            (:dir "log" :datetree t)
             (:dir "sci" :datetree t) ;; Scientific
             (:dir "stc" :datetree nil))) ;; Static
           (:dir "~/mvtn/study" :name "uni" :structure
@@ -22,7 +22,7 @@
         mvtn-excluded-directories '(".git" ".svn" "ltximg" "ORGPICS" "auto")
         mvtn-cv-enable t
         mvtn-journal-new-daily-title "Log for %Y-%m-%d"
-        mvtn-journal-dir "prv/log")
+        mvtn-journal-dir "~/mvtn/private/log")
 
   ;; (mvtn-journal-autojournal-set-feature 'git-commit t)
   ;; (mvtn-journal-autojournal-set-feature 'note-changed t)
