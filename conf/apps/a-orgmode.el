@@ -62,7 +62,8 @@
 ;;-------------------------------------------------------------------------------------------------
 ;; ORG Settings
 (setq org-duration-format 'h:mm
-
+      org-babel-min-lines-for-block-output 50
+      org-confirm-babel-evaluate nil
       ;; Agenda
       org-agenda-files '("~/org/Agenda/")
       org-agenda-restore-windows-after-quit t
@@ -178,6 +179,43 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
                  prop-pos))))
     (if pos (goto-char pos))
     (if backwards (goto-char (line-beginning-position)))))
+
+;; OB-GO: Org babel support for go
+(use-package ob-go)
+(with-eval-after-load 'ob-go (require 'l-go)) ;; enable highlighting, etc
+
+(add-hook 'org-babel-after-execute-hook 'org-redisplay-inline-images)
+
+;; Run/highlight code using babel in org-mode
+(setq org-babel-load-languages
+      '((emacs-lisp . t)
+        ;; (lisp . t)
+	(ein . t)
+        (python . t)
+        (js . t)
+	(arduino . t)
+	(R . t)
+        ;; (java . t)
+        ;; (C . t)
+        (sql . t)
+        (calc . t)
+        ;; (perl . t)
+        (shell . t)
+        ;; (octave . t)
+        ;; (plantuml . t)
+        ;; (matlab . t)
+        (go . t)))
+      ;; org-babel-octave-shell-command "octave -q")
+
+(org-babel-do-load-languages 'org-babel-load-languages org-babel-load-languages)
+
+;; STRUCTURAL TEMPLATES for Babel
+;; This is needed as of Org 9.2
+(require 'org-tempo)
+
+(add-to-list 'org-structure-template-alist '("sh" . "src shell"))
+(add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp"))
+(add-to-list 'org-structure-template-alist '("py" . "src python"))
 
 ;; ORG-CLOCK
 (setq org-clock-history-length 23

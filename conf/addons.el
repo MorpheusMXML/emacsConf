@@ -5,6 +5,7 @@
 ;; MVTN: Easy Notes in ORGmode
 (require 'a-mvtn)
 (require 'a-shell)
+(require 'a-ein)
 ;; ;; PDF-TOOLS
 ;; (require 'a-pdf)
 ;; ORGMODE 
