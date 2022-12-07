@@ -49,14 +49,6 @@
 (set-keyboard-coding-system 'utf-8)
 (prefer-coding-system 'utf-8)
 
-;; ;; KEYBINDING standard copy Paste
-;; (global-set-key (kbd "M-c") 'kill-ring-save) ; ⌘-c = Copy
-;; (global-set-key (kbd "M-x") 'kill-region) ; ⌘-x = Cut
-;; (global-set-key (kbd "M-v") 'yank) ; ⌘-v = Paste
-;; (global-set-key (kbd "M-a") 'mark-whole-buffer) ; ⌘-a = Select all
-;; (global-set-key (kbd "M-z") 'undo) ; ⌘-z = Undo
-;; (global-set-key (kbd "≈") 'execute-extended-command) ; Replace ≈ with whatever your option-x produces
-
 ;; Code to replace exec-path-from-shell
 ;; Need to create file in $HOME/.emacs.d/.local/env
 ;; use this command to create the file  `printenv > $HOME/.emacs.d/.local/env'
@@ -104,6 +96,11 @@ unreadable. Returns the names of envvars that were changed."
            (file-exists-p my-env-file))
   (my-load-envvars-file my-env-file))
 ;;; Code to replace exec-path-from-shell
+(setq user-full-name "Maximilian Brosius")
+(setq frame-title-format '("Allmighty Editor " emacs-version))
+(put 'downcase-region 'disabled nil)
+(put 'upcase-region 'disabled nil)
+(setq initial-scratch-message "")
 
 (setq epa-pinentry-mode 'loopback)
 (setq insert-directory-program "gls" dired-use-ls-dired t)

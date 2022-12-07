@@ -3,10 +3,10 @@
 ;;Import ORG Mode as one of the First Pkgs in order to prevent other dependencies pulling outdated versions.
 (use-package org)
 
-(use-package exec-path-from-shell)
-(exec-path-from-shell-copy-env "PYTHONPATH")
-(when (memq window-system '(mac ns x))
-  (exec-path-from-shell-initialize))
+;; (use-package exec-path-from-shell)
+;; (exec-path-from-shell-copy-env "PYTHONPATH")
+;; (when (memq window-system '(mac ns x))
+;;   (exec-path-from-shell-initialize))
 ;; -----------------------------------------------------------------------------------------------------------
 ;;GENERAL: Keybindings
 (use-package general)

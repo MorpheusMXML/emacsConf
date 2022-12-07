@@ -3,17 +3,20 @@
 (use-package company)
 
 (setq company-idle-delay 0.0
-      company-tooltip-limit 5
-      company-minimum-prefix-length 3
+      company-tooltip-limit 15
+      company-minimum-prefix-length 1 
       company-echo-delay 0
       company-auto-complete nil
-      company-show-numbers t)
+      company-show-numbers 0)
 (add-hook 'prog-mode-hook 'company-mode)
+
+(use-package company-box
+  :hook (company-mode . company-box-mode))
 
 (general-def
   :states '(normal insert)
   :keymaps 'company-mode-map
-  "C-<return>" 'company-search-candidates)
+  "C-SPC" 'company-search-candidates)
 
 ;; COMPANY-PRESCIENT: better autocomplete suggestions based on past selections
 (use-package company-prescient)
@@ -77,7 +80,15 @@
 
 ;; LSP: language server in emacs
 ;; In case shit breaks -> goto github page - search for stable lable - reset to commit xxxxxx
-(use-package lsp-mode)
+(use-package lsp-mode
+  :straight t
+  :hook ((js-mode
+	  js-jsx-mode
+	  python-mode))
+  :commands (lsp lsp-deferred)
+  :config
+  (lsp-enable-which-key-integration t))
+
 (setq lsp-eldoc-render-all nil
       read-process-output-max 1048576
       lsp-idle-delay 0.500
@@ -122,13 +133,13 @@
 ;; (push '("\\.[ch]\\'" . (lambda () (require 'l-cc) (c-mode))) auto-mode-alist)
 (push '("\\.tex\\'" . (lambda () (require 'l-tex) (LaTeX-mode))) auto-mode-alist)
 (push '("\\.el\\'" . (lambda () (require 'l-elisp) (emacs-lisp-mode))) auto-mode-alist)
-
+;; (push '("\\.js\\'" . (lambda () (require 'lsp-typescript) (javascript-mode))) auto-mode-alist)
 (push '("\\.py\\'" . (lambda () (require 'l-python) (python-mode))) auto-mode-alist)
 ;; (push '("python[0-9.]*" . (lambda () (require 'l-python) (python-mode))) interpreter-mode-alist)
 
 ;; (push '("\\.java\\'" . (lambda () (require 'l-java) (java-mode))) auto-mode-alist)
-;; (push '("\\.\\(tsx?\\|jsx?\\)\\'" . (lambda () (require 'l-typescript) (web-tide-mode))) auto-mode-alist)
-;; (push '("\\.\\(xml\\|html\\|php\\|css\\)\\'" . (lambda () (require 'l-web) (web-mode))) auto-mode-alist)
+(push '("\\.\\(tsx?\\|jsx?\\)\\'" . (lambda () (require 'l-typescript) (web-tide-mode))) auto-mode-alist)
+(push '("\\.\\(xml\\|html\\|php\\|css\\)\\'" . (lambda () (require 'l-web) (web-mode))) auto-mode-alist)
 
 
 ;; Keybindings
@@ -168,16 +179,23 @@
 
 ;; OTHER SMALL LANGUAGES: with nearly no setup
 ;; JS
-;; (straight-use-package 'js2-mode)
+;; (use-package js2-mode)
 ;; (push '("\\.\\(js\\)\\'" . js2-mode) auto-mode-alist)
 ;; ;; sudo npm i -g javascript-typescript-langserver
 ;; (add-hook 'js2-mode-hook #'lsp-deferred)
 
+;; JAVASCRIPT RJSX Mode
+;; (use-package rjsx-mode
+;;   :straight t
+;;   :mode "\\.js\\'")
+
+
+
 ;; STRUCTURE LANGUAGES: mostly highlighting and indent
-;; CADDY
-(use-package caddyfile-mode)
-(push '("\\(Caddyfile\\|caddy.conf\\)\\'" . caddyfile-mode) auto-mode-alist)
-;;----------------------------------------------------------------------------------------------------
+;; ;; CADDY
+;; (use-package caddyfile-mode)
+;; (push '("\\(Caddyfile\\|caddy.conf\\)\\'" . caddyfile-mode) auto-mode-alist)
+;; ;;----------------------------------------------------------------------------------------------------
 ;; MAGIT - Mighty Git Interface
 (use-package magit)
 
