@@ -2,7 +2,7 @@
 ;; ORG-MODE:
 ;;Import ORG Mode as one of the First Pkgs in order to prevent other dependencies pulling outdated versions.
 (use-package org)
-
+;;test
 (use-package exec-path-from-shell)
 (exec-path-from-shell-copy-env "PYTHONPATH")
 ;; (exec-path-from-shell-copy-env "GPG_TTY")
