@@ -1,7 +1,8 @@
 (use-package mu4e)
 
 (require 'smtpmail)
-;; asdasd
+
+
 ;; we installed this with homebrew
 (setq mu4e-mu-binary (executable-find "mu"))
 
