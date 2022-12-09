@@ -2,7 +2,6 @@
 
 (require 'smtpmail)
 
-
 ;; we installed this with homebrew
 (setq mu4e-mu-binary (executable-find "mu"))
 
@@ -157,7 +156,7 @@
 ;; this can be left alone
 (require 'epa-file)
 (epa-file-enable)
-(setq epa-pinentry-mode 'loopback)
+(setq epg-pinentry-mode 'loopback)
 (auth-source-forget-all-cached)
 
 ;; don't keep message compose buffers around after sending:
