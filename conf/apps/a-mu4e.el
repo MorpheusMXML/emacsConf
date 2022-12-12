@@ -1,6 +1,10 @@
-(use-package mu4e)
-
 (require 'smtpmail)
+
+(use-package mu4e
+  :config
+
+  ;; Load org-mode integration
+  (require 'org-mu4e)
 
 ;; we installed this with homebrew
 (setq mu4e-mu-binary (executable-find "mu"))
@@ -16,6 +20,8 @@
 ;; save attachment to desktop by default
 ;; or another choice of yours:
 (setq mu4e-attachment-dir "~/mu4e")
+  ;; Use Ivy for mu4e completions (maildir folders, etc)
+  (setq mu4e-completing-read-function #'ivy-completing-read)
 
 ;; rename files when moving - needed for mbsync:
 (setq mu4e-change-filenames-when-moving t)
@@ -46,7 +52,50 @@
 ;; by default do not show threads:
 (setq mu4e-headers-show-threads nil)
 
+;; check your ~/.maildir to see how the subdirectories are called
+;; for the generic imap account:
+;; e.g `ls ~/.maildir/example'
+(setq   mu4e-maildir-shortcuts
+        '(("/icloud/INBOX" . ?i)
+          ("/icloud/Sent Messages" . ?I)
+          ("/gmail/INBOX" . ?g)
+          ("/gmail/[Gmail]/Gesendet" . ?G)
+	  ("/maxbrosius/INBOX" . ?p)
+	  ("/maxbrosius/Sent Items" . ?P)
+	  ("/hellomaxb/INBOX" . ?e)
+          ("/hellomaxb/Sent Items" . ?E)
+	  ("/uhhmail/INBOX" . ?u)
+	  ("/uhhmail/Gesendete Elemente" . ?y)))
 
+(setq mu4e-context-policy 'pick-first)
+
+  ;; Prevent mu4e from permanently deleting trashed items
+  ;; This snippet was taken from the following article:
+  ;; http://cachestocaches.com/2017/3/complete-guide-email-emacs-using-mu-and-/
+  (defun remove-nth-element (nth list)
+    (if (zerop nth) (cdr list)
+      (let ((last (nthcdr (1- nth) list)))
+        (setcdr last (cddr last))
+        list)))
+  (setq mu4e-marks (remove-nth-element 5 mu4e-marks))
+  (add-to-list 'mu4e-marks
+               '(trash
+                 :char ("d" . "▼")
+                 :prompt "dtrash"
+                 :dyn-target (lambda (target msg) (mu4e-get-trash-folder msg))
+                 :action (lambda (docid msg target)
+                           (mu4e~proc-move docid
+                                           (mu4e~mark-check-target target) "-N"))))
+
+                                     ;; Display options
+  (setq mu4e-view-show-images t)
+  (setq mu4e-view-show-addresses 't)
+
+    ;; don't keep message buffers around
+  (setq message-kill-buffer-on-exit t)
+
+  ;; Composing mail
+  (setq mu4e-compose-dont-reply-to-self t)
 
 
 (setq mu4e-contexts
@@ -79,12 +128,12 @@
             (when msg
               (mu4e-message-contact-field-matches msg
                                                   :to "brosiusmax@gmail.com")))
-          :vars '((user-mail-address . "mbrosius@icloud.com")
+          :vars '((user-mail-address . "brosiusmac@gmail.com")
                   (user-full-name . "Maximilian Brosius")
-                  (mu4e-drafts-folder . "/gmail/Drafts")
-                  (mu4e-refile-folder . "/gmail/Archive")
-                  (mu4e-sent-folder . "/gmail/Sent")
-                  (mu4e-trash-folder . "/gmail/Trash")))
+                  (mu4e-drafts-folder . "/gmail/[GMAIL]/Entw&APw-rfe")
+                  (mu4e-refile-folder . "/gmail/[GMAIL]/Alle Nachrichten")
+                  (mu4e-sent-folder . "/gmail/[GMAIL]/Gesendet")
+                  (mu4e-trash-folder . "/gmail/[GMAIL]/Papierkorb")))
 
         ,(make-mu4e-context
           :name "maxbrosius"
@@ -101,10 +150,10 @@
                   (user-full-name . "Maximilian Brosius")
                   ;; check your ~/.maildir to see how the subdirectories are called
                   ;; e.g `ls ~/.maildir/example'
-                  (mu4e-drafts-folder . "/example/Drafts")
-                  (mu4e-refile-folder . "/example/Archive")
-                  (mu4e-sent-folder . "/example/Sent")
-                  (mu4e-trash-folder . "/example/Trash")))
+                  (mu4e-drafts-folder . "/maxbrosius/Drafts")
+                  (mu4e-refile-folder . "/maxbrosius/Archive")
+                  (mu4e-sent-folder . "/maxbrosius/Sent")
+                  (mu4e-trash-folder . "/maxbrosius/Trash")))
 
         ,(make-mu4e-context
           :name "hellomaxb"
@@ -121,10 +170,10 @@
                   (user-full-name . "Maximilian Brosius")
                   ;; check your ~/.maildir to see how the subdirectories are called
                   ;; e.g `ls ~/.maildir/example'
-                  (mu4e-drafts-folder . "/example/Drafts")
-                  (mu4e-refile-folder . "/example/Archive")
-                  (mu4e-sent-folder . "/example/Sent")
-                  (mu4e-trash-folder . "/example/Trash")))
+                  (mu4e-drafts-folder . "/hellomaxb/Drafts")
+                  (mu4e-refile-folder . "/hellomaxb/Archive")
+                  (mu4e-sent-folder . "/hellomaxb/Sent")
+                  (mu4e-trash-folder . "/hellomaxb/Trash")))
 
 
         ,(make-mu4e-context
@@ -142,15 +191,25 @@
                   (user-full-name . "Maximilian Brosius")
                   ;; check your ~/.maildir to see how the subdirectories are called
                   ;; e.g `ls ~/.maildir/example'
-                  (mu4e-drafts-folder . "/example/Drafts")
-                  (mu4e-refile-folder . "/example/Archive")
-                  (mu4e-sent-folder . "/example/Sent")
-                  (mu4e-trash-folder . "/example/Trash")))
+                  (mu4e-drafts-folder . "/uhhmail/Entw&APw-rfe")
+                  (mu4e-refile-folder . "/uhhmail/Archiv")
+                  (mu4e-sent-folder . "/uhhmail/Gesendete Elemente")
+                  (mu4e-trash-folder . "/uhhmail/Gel&APY-schte Elemente")))
 	))
 
 (setq mu4e-context-policy 'pick-first) ;; start with the first (default) context;
 (setq mu4e-compose-context-policy 'ask) ;; ask for context if no context matches;
 
+;; convenience function for starting the whole mu4e in its own frame
+;; posted by the author of mu4e on the mailing list
+(defun mu4e-in-new-frame ()
+  "Start mu4e in new frame."
+  (interactive)
+  (select-frame (make-frame))
+  (mu4e))
+
+;; spell checking
+(add-hook 'mu4e-compose-mode-hook 'flyspell-mode)
 
 ;; gpg encryptiom & decryption:
 ;; this can be left alone
@@ -169,9 +228,43 @@
 ;; send program:
 ;; this is exeranal. remember we installed it before.
 (setq sendmail-program (executable-find "msmtp"))
+;; the following is to show shortcuts in the main view.
+
+(add-to-list 'mu4e-bookmarks
+	    '(:name "Inbox - iCloud"
+              :query "maildir:/icloud/INBOX"
+              :key ?a))
+(add-to-list 'mu4e-bookmarks
+            '(:name "Inbox - Gmail"
+              :query "maildir:/gmail/INBOX"
+              :key ?g))
+(add-to-list 'mu4e-bookmarks
+            '(:name "Inbox - Private"
+              :query "maildir:/maxbrosius/INBOX"
+              :key ?p))
+(add-to-list 'mu4e-bookmarks
+            '(:name "Inbox - hello maxb"
+              :query "maildir:/hellomaxb/INBOX"
+              :key ?e))
+(add-to-list 'mu4e-bookmarks
+            '(:name "Inbox - UHHmail"
+              :query "maildir:/uhhmail/INBOX"
+              :key ?u))
+(add-to-list 'mu4e-bookmarks
+	     '(:name "All Inboxes"
+		     :query "maildir:/icloud/INBOX OR maildir:/gmail/INBOX OR maildir:/maxbrosius/INBOX OR maildir:/hellomaxb/INBOX OR maildir:/uhhmail/INBOX"
+		     :key ?I))
+
+(setq mabr/mu4e-inbox-query
+        "(maildir:/icloud/INBOX OR maildir:/gmail/INBOX OR maildir:/maxbrosius/INBOX OR maildir:/hellomaxb/INBOX OR maildir:/uhhmail/INBOX) AND flag:unread")
+
+  (defun mabr/go-to-inbox ()
+    (interactive)
+    (mu4e-headers-search mabr/mu4e-inbox-query))
 
 ;; select the right sender email from the context.
 (setq message-sendmail-envelope-from 'header)
+(mu4e t))
 
 ;; chose from account before sending
 ;; this is a custom function that works for me.
@@ -191,7 +284,7 @@
                ((string-match "brosiusmax@gmail.com" from) "gmail")
                ((string-match "mail@maxbrosius.de" from) "maxbrosius")
 	       ((string-match "hello@maxbrosius.de" from) "hellomaxb")
-	       ((string-match "maximilian.brosius@uni-hamburg.de" from) "uhhmail"))))
+	       ((string-match "maximilian.brosius@uni-hamburg.de" from) "uhh"))))
           (setq message-sendmail-extra-arguments (list '"-a" account))))))
 
 (add-hook 'message-send-mail-hook 'mabr/set-msmtp-account)
@@ -207,5 +300,15 @@
 
 ;; mu4e address completion
 (add-hook 'mu4e-compose-mode-hook 'company-mode)
+
+(use-package mu4e-alert
+  :after mu4e-debug
+  :config
+  ;; Shwo unread emails from all INboxes
+  (setq mu4e-alert-interesting-mail-query mabr/mu4e-inbox-query)
+
+  ;; Shiw notifications for mails already notified
+  (setq mu4e-alert-notify-repeated-mails nil)
+  (mu4e-alert-enable-notifications))
 
 (provide 'a-mu4e)

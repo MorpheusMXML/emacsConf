@@ -82,7 +82,7 @@
   "e c" '((lambda() (interactive) (dired mabr/emacsconf)) :which-key "edit emacs config")
   "e o" '((lambda() (interactive) (dired mabr/orgfiles)) :which-key "edit org files")
 
-  "e m" '(gnus :which-key "Edit mail")
+  "e m" '(mu4e :which-key "Edit mail")
 
 
  "q" '(:ignore t :which-key "Quality :)")
