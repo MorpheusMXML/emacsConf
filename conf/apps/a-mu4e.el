@@ -19,7 +19,7 @@
 
 ;; save attachment to desktop by default
 ;; or another choice of yours:
-(setq mu4e-attachment-dir "~/mu4e")
+(setq mu4e-attachment-dir "~/Downloads")
   ;; Use Ivy for mu4e completions (maildir folders, etc)
   (setq mu4e-completing-read-function #'ivy-completing-read)
 
@@ -197,7 +197,7 @@
                   (mu4e-trash-folder . "/uhhmail/Gel&APY-schte Elemente")))
 	))
 
-(setq mu4e-context-policy 'pick-first) ;; start with the first (default) context;
+;; (setq mu4e-context-policy 'pick-first) ;; start with the first (default) context;
 (setq mu4e-compose-context-policy 'ask) ;; ask for context if no context matches;
 
 ;; convenience function for starting the whole mu4e in its own frame
@@ -223,7 +223,8 @@
 
 ;; send function:
 (setq send-mail-function 'sendmail-send-it
-      message-send-mail-function 'sendmail-send-it)
+      message-sendmail-extra-arguments '("--read-envelope-from")
+     message-send-mail-function 'message-send-mail-with-sendmail)
 
 ;; send program:
 ;; this is exeranal. remember we installed it before.
