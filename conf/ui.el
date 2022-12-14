@@ -3,7 +3,7 @@
 ;; You will most likely need to adjust this font size for your system!
 (defvar mabr/default-font-size 147)
 
-
+;; This is a test.  
 (setq inhibit-startup-message t)
 (setq inhibit-splash-screen t
       inhibit-startup-echo-area-message t)
