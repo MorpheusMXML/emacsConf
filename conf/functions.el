@@ -10,4 +10,14 @@
     (if (string-match "^/sudo:" file)
         (user-error "File already opened with sudo")
       (find-file (concat "/sudo::" file)))))
+
+;; Remap Open Dashboard
+(defun mabr/new-dashboard ()
+  "Jump to the dashboard buffer, if doesn't exists create one."
+  (interactive)
+  (switch-to-buffer dashboard-buffer-name)
+  (dashboard-mode)
+  (dashboard-insert-startupify-lists)
+  (dashboard-refresh-buffer))
+
 (provide 'functions)

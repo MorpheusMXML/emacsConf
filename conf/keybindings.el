@@ -31,10 +31,11 @@
   "f" 'counsel-find-file
   "F" 'mabr/find-file-sudo
   "g" 'magit-status
-  "h" 'evil-avy-goto-line
+  "j" 'evil-avy-goto-line
   "i" 'counsel-imenu
-   "y" 'counsel-yank-pop
-
+  "y" 'counsel-yank-pop
+  "h" 'mabr/new-dashboard
+  
   "8" 'insert-char
 
   "/" 'swiper
