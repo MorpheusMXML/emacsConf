@@ -217,6 +217,9 @@
 (epa-file-enable)
 (setq epg-pinentry-mode 'loopback)
 (auth-source-forget-all-cached)
+
+;; Pinentry 5000000
+
 ;; don't keep message compose buffers around after sending:
 (setq message-kill-buffer-on-exit t)
 
