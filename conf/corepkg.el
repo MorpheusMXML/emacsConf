@@ -72,6 +72,57 @@
 (drag-stuff-define-keys)
 
 (use-package flyspell)
+(dolist (hook '(text-mode-hook))
+  (add-hook hook (lambda () (flyspell-mode 1))))
+
+(eval-after-load "flyspell"
+  '(progn
+     (define-key flyspell-mouse-map [down-mouse-3] #'flyspell-correct-word)
+     (define-key flyspell-mouse-map [mouse-3] #'undefined)))
+;; Set $DICPATH to "$HOME/Library/Spelling" for hunspell.
+(setenv
+  "DICPATH"
+  (concat (getenv "HOME") "/Library/Spelling"))
+;; Tell ispell-mode to use hunspell.
+;; (setq
+;;   ispell-program-name
+;;   "/opt/homebrew/bin/hunspell")
+
+(setq ispell-hunspell-dict-paths-alist
+      '(("en_US" "~/Library/Spelling/en_US.dic")
+	("de_DE" "~/Library/Spelling/de_DE.dic")))
+
+(add-to-list 'ispell-local-dictionary-alist '("de_DE"
+                                              "[[:alpha:]]"
+                                              "[^[:alpha:]]"
+                                              "[']"
+                                              t
+                                              ("-d" "de_DE"); Dictionary file name
+                                              nil
+                                              iso-8859-1))
+
+(add-to-list 'ispell-local-dictionary-alist '("en_US"
+                                              "[[:alpha:]]"
+                                              "[^[:alpha:]]"
+                                              "[']"
+                                              t
+                                              ("-d" "en_US")
+                                              nil
+                                              iso-8859-1))
+
+(setq ispell-program-name "hunspell"          ; Use hunspell to correct mistakes
+      ispell-dictionary   "de_DE") ; Default dictionary to use
+
+(defun switch-dictionary-de-en ()
+  "Switch german and english dictionaries."
+  (interactive)
+  (let* ((dict ispell-current-dictionary)
+         (new (if (string= dict "de_DE") "en_US"
+                   "de_DE")))
+    (ispell-change-dictionary new)
+    (message "Switched dictionary from %s to %s" dict new)))
+
+(global-set-key (kbd "<f6>") 'switch-dictionary-de-en)
 ;; -----------------------------------------------------------------------------------------------------------
 ;; ELECTRIC-PAIRS & RAINBOW
 ;; electric-pair: auto-balance brackets

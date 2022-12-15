@@ -3,6 +3,9 @@
 ;; You will most likely need to adjust this font size for your system!
 (defvar mabr/default-font-size 147)
 
+;; FULLSCREN ON STARTUP
+;; start the initial frame maximized
+(add-to-list 'initial-frame-alist '(fullscreen . fullboth))
 ;; This is a test.  
 (setq inhibit-startup-message t)
 (setq inhibit-splash-screen t
