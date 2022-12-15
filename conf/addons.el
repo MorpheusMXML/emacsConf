@@ -9,7 +9,7 @@
 (require 'a-vterm)
 (require 'a-mu4e)
 ;; ;; PDF-TOOLS
-;; (require 'a-pdf)
+(require 'a-pdf-tools)
 ;; ORGMODE 
 
 ;; ORG-MODE

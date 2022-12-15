@@ -178,5 +178,4 @@
 ;; MESSAGE BUFFER:
 (evil-initial-state 'message-mode 'normal)
 
-
 (provide 'corepkg)
