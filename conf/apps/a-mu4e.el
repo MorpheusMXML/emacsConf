@@ -215,7 +215,7 @@
 ;; this can be left alone
 (require 'epa-file)
 (epa-file-enable)
-(setq epg-pinentry-mode 'loopback)
+(setq epg-pinentry-mode nil)
 (auth-source-forget-all-cached)
 
 ;; don't keep message compose buffers around after sending:
