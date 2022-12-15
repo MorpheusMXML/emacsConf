@@ -218,7 +218,6 @@
 (setq epg-pinentry-mode 'loopback)
 (auth-source-forget-all-cached)
 
-;;Testing Pinentry mac setup 50004000000000000 
 ;; don't keep message compose buffers around after sending:
 (setq message-kill-buffer-on-exit t)
 
