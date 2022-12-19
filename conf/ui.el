@@ -112,7 +112,27 @@
 (setq dashboard-set-file-icons t)
 (setq dashboard-projects-switch-function 'counsel-projectile-switch-project-by-name)
 (setq dashboard-week-agenda t)
-  )
+)
+
+(use-package centaur-tabs
+  :demand
+  :config
+  (setq centaur-tabs-style "wave")
+  (setq centaur-tabs-set-icons t)
+  (setq centaur-tabs-gray-out-icons 'buffer)
+(setq centaur-tabs-set-bar 'under)
+;; Note: If you're not using Spacmeacs, in order for the underline to display
+;; correctly you must add the following line:
+(setq x-underline-at-descent-line t)
+(setq centaur-tabs-set-close-button nil)
+(setq centaur-tabs-set-modified-marker t)
+(setq centaur-tabs-height 35)
+(centaur-tabs-headline-match)
+  (centaur-tabs-mode t)
+  :bind
+(:map evil-normal-state-map
+	     ("g t" . centaur-tabs-forward)
+	     ("g T" . centaur-tabs-backward)))
 
 
 (provide 'ui)

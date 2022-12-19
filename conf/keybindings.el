@@ -83,10 +83,13 @@
   "e c" '((lambda() (interactive) (dired mabr/emacsconf)) :which-key "edit emacs config")
   "e o" '((lambda() (interactive) (dired mabr/orgfiles)) :which-key "edit org files")
 
-  "e m" '(mu4e :which-key "Edit mail")
+  "m" '(:ignore t :which-key "Mail")
+  "m m" 'mu4e
+  "m c" 'mu4e-compose-new
+  "m i" 'mabr/go-to-inbox 
+  "m u" 'mu4e-update-mail-and-index
 
-
- "q" '(:ignore t :which-key "Quality :)")
+  "q" '(:ignore t :which-key "Quality :)")
   "q t" 'mabr/cycle-themes
   "q s" '(hydra-text-scale/body :which-key "Scale Text")
 
@@ -110,8 +113,8 @@
   "t i" '(:ignore t :which-key "Insert")
   "t i t" 'mabr/insert-current-timestamp
 
-  "m" '(:ignore t :which-key "Modes")
-  "m s" 'flyspell-mode
+  "c" '(:ignore t :which-key "Modes")
+  "c s" 'flyspell-mode
   
   "?" '(:ignore t :which-key "Describe")
   "? v" 'describe-variable
