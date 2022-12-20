@@ -136,7 +136,7 @@
 ;; (push '("\\.js\\'" . (lambda () (require 'lsp-typescript) (javascript-mode))) auto-mode-alist)
 (push '("\\.py\\'" . (lambda () (require 'l-python) (python-mode))) auto-mode-alist)
 ;; (push '("python[0-9.]*" . (lambda () (require 'l-python) (python-mode))) interpreter-mode-alist)
-
+(push '("\\.cs\\'" . (lambda () (require 'l-csharp) (csharp-mode))) auto-mode-alist)
 ;; (push '("\\.java\\'" . (lambda () (require 'l-java) (java-mode))) auto-mode-alist)
 (push '("\\.\\(tsx?\\|jsx?\\)\\'" . (lambda () (require 'l-typescript) (web-tide-mode))) auto-mode-alist)
 (push '("\\.\\(xml\\|html\\|php\\|css\\)\\'" . (lambda () (require 'l-web) (web-mode))) auto-mode-alist)

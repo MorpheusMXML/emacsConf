@@ -44,6 +44,12 @@
 (require 'variables)
 (message "Done loading: variables.el")
 
+;; start emacs-server if not running
+    (add-hook 'after-init-hook
+        (lambda ()
+          (require 'server)
+          (unless (server-running-p)
+            (server-start))))
 
 (set-terminal-coding-system 'utf-8)
 (set-keyboard-coding-system 'utf-8)
