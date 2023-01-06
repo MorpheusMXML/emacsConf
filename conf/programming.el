@@ -199,8 +199,14 @@
 ;; MAGIT - Mighty Git Interface
 (use-package magit)
 
-
-
+(use-package forge
+  :after magit
+  :config
+  (setq auth-sources '("~/.authinfo"))
+  (add-to-list 'forge-alist '("git.informatik.uni-hamburg.de" "git.informatik.uni-hamburg.de/api/v4" "git.informatik.uni-hamburg.de" forge-gitlab-repository))
+  (add-to-list 'forge-alist '("uni" "git.informatik.uni-hamburg.de/api/v4" "git.informatik.uni-hamburg.de" forge-gitlab-repository))
+  (add-to-list 'forge-alist '("github.com" "api.github.com" "github.com" forge-github-repository))
+  (add-to-list 'forge-alist '("gh" "api.github.com" "github.com" forge-github-repository)))
 ;; JSON
 (use-package json-mode)
 (push '("\\.\\(json\\|imp\\)\\'" . json-mode) auto-mode-alist)

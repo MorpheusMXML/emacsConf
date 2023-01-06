@@ -96,7 +96,7 @@
 
       ;; REFILE
       org-refile-targets '(("Archive.org" :maxlevel . 1)
-			   ("Glou.org" :maxlevel . 1)
+			   ("MasterThesis.org" :maxlevel . 1)
 			   ("private.org" :maxlevel . 1))
       ;; TODOS
       org-todo-keywords

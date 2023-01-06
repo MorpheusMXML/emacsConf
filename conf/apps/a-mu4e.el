@@ -61,7 +61,7 @@
 	  ("/maxbrosius/Sent Items" . ?P)
 	  ("/hellomaxb/INBOX" . ?e)
           ("/hellomaxb/Sent Items" . ?E)
-	  ("/uhhmail/INBOX" . ?u)
+	  ("/uhhmail/INBOX" . ?c)
 	  ("/uhhmail/Gesendete Elemente" . ?y)))
 
   (setq mu4e-context-policy 'pick-first)
