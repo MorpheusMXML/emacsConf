@@ -3,8 +3,14 @@
 
 (setq dired-listing-switches "-lFahv --group-directories-first"
       dired-dwim-target t
-      delete-by-moving-to-trash t
       dired-ls-F-marks-symlinks t)
+
+
+(use-package osx-trash)
+ (when (eq system-type 'darwin)
+  (osx-trash-setup))
+(setq delete-by-moving-to-trash t)
+
 
 ;; Keybindings
 (general-def
