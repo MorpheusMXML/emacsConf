@@ -202,7 +202,7 @@
 (use-package forge
   :after magit
   :config
-  (setq auth-sources '("~/.authinfo"))
+  (setq auth-sources '("~/.authinfo.gpg"))
   (add-to-list 'forge-alist '("git.informatik.uni-hamburg.de" "git.informatik.uni-hamburg.de/api/v4" "git.informatik.uni-hamburg.de" forge-gitlab-repository))
   (add-to-list 'forge-alist '("uni" "git.informatik.uni-hamburg.de/api/v4" "git.informatik.uni-hamburg.de" forge-gitlab-repository))
   (add-to-list 'forge-alist '("github.com" "api.github.com" "github.com" forge-github-repository))

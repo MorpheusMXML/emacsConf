@@ -112,7 +112,7 @@
                   ;; check your ~/.maildir to see how the subdirectories are called
                   (mu4e-drafts-folder . "/maxbrosius/Drafts")
                   (mu4e-refile-folder . "/maxbrosius/Archive")
-                  (mu4e-sent-folder . "/maxbrosius/Sent")
+                  (mu4e-sent-folder . "/maxbrosius/Sent Items")
                   (mu4e-trash-folder . "/maxbrosius/Trash")))
 	,(make-mu4e-context
           :name "icloud"
@@ -166,7 +166,7 @@
                   ;; check your ~/.maildir to see how the subdirectories are called
                   (mu4e-drafts-folder . "/hellomaxb/Drafts")
                   (mu4e-refile-folder . "/hellomaxb/Archive")
-                  (mu4e-sent-folder . "/hellomaxb/Sent")
+                  (mu4e-sent-folder . "/hellomaxb/Sent Items")
                   (mu4e-trash-folder . "/hellomaxb/Trash")))
 
 
@@ -347,5 +347,6 @@
   ;; Shiw notifications for mails already notified
   (setq mu4e-alert-notify-repeated-mails nil)
   (mu4e-alert-enable-notifications))
+
 
 (provide 'a-mu4e)
