@@ -5,6 +5,7 @@
   :config
   (company-auctex-init))
 
+
 ;; Load Auxtex
 (load "auctex.el" nil t t)
 
@@ -12,7 +13,6 @@
 (add-hook 'LaTeX-mode-hook 'visual-line-mode)
 (add-hook 'LaTeX-mode-hook 'flyspell-mode)
 (add-hook 'LaTeX-mode-hook 'LaTeX-math-mode)
-(add-hook 'LaTeX-mode-hook 'hunspell-mode)
 
 ;; hooking up and setting reftex
 (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
@@ -25,11 +25,6 @@
 ;; for parentheses
 (setq LaTeX-electric-left-right-brace 1)
 
-;; for inserting $|$
-(add-hook 'LaTeX-mode-hook
-	  (lambda () (set (make-variable-buffer-local 'TeX-electric-math)
-			  (cons "$" "$"))))
-
 ;; For emacs to know where is pdflatex
 (setenv "PATH"
 	(concat
@@ -37,26 +32,22 @@
 
 ;; Make latexmk available via C-c C-c
 ;; Note: SyncTeX is setup via ~/.latexmkrc (see below)
-(add-hook 'LaTeX-mode-hook (lambda ()
-  (push
-    '("latexmk" "latexmk -synctex=1 -pvc -pdf %s" TeX-run-TeX nil t
-      :help "Run latexmk on file")
-    TeX-command-list)))
-(add-hook 'TeX-mode-hook '(lambda () (setq TeX-command-default "latexmk")))
+;; (add-hook 'LaTeX-mode-hook (lambda ()
+;;   (push
+;;     '("latexmk" "latexmk -pvc -pdf %s" TeX-run-TeX nil t
+;;       :help "Run latexmk on file")
+;;     TeX-command-list)))
+;; (add-hook 'TeX-mode-hook '(lambda () (setq TeX-command-default "latexmk")))
 
-;; use Skim as default pdf viewer
-;; Skim's displayline is used for forward search (from .tex to .pdf)
-;; option -b highlights the current line; option -g opens Skim in the background  
-(setq TeX-view-program-selection '((output-pdf "PDF Viewer")))
-(setq TeX-view-program-list
-     '(("PDF Viewer" "/Applications/Skim.app/Contents/SharedSupport/displayline -b %n %o %b")))
-
+(use-package auctex-latexmk)
+(auctex-latexmk-setup)
+(setq auctex-latexmk-inherit-TeX-PDF-mode t)
 ;; To invoke Skim using shift-command-click
 (add-hook 'LaTeX-mode-hook
-          (lambda () (local-set-key (kbd "<M-S-RET>") #'TeX-view)))
+          (lambda () (local-set-key (kbd "<M-s-mouse-1>") #'TeX-view)))
 
 ;; Error handling
-;; (setq TeX-display-help nil)
+(setq TeX-display-help nil)
 
 ;; Clean things up
 (eval-after-load 'latex
@@ -84,10 +75,16 @@
 ;; Always parse the file upon opening
       TeX-parse-self t
       TeX-save-query nil
-      ;; TeX-view-program-selection '((output-pdf "PDF Tools"))
+      TeX-view-program-selection '((output-pdf "PDF Viewer"))
       ;; TeX-view-program-list '(("PDF Tools" TeX-pdf-tools-sync-view))
+;; use Skim as default pdf viewer
+;; Skim's displayline is used for forward search (from .tex to .pdf)
+;; option -b highlights the current line; option -g opens Skim in the background  
+      TeX-view-program-list
+     '(("PDF Viewer" "/Applications/Skim.app/Contents/SharedSupport/displayline -b %n %o %b"))
       TeX-source-correlate-start-server t
-;; Choose pdflatex
+      TeX-source-correlate-method 'synctex
+      ;; Choose pdflatex
       TeX-PDF-mode t
       TeX-DVI-via-PDFTeX t
       LaTeX-item-indent 0
