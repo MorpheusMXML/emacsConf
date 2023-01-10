@@ -114,81 +114,129 @@
 (setq dashboard-week-agenda t)
 )
 
+;; TREEMACS
+(use-package treemacs
+  :ensure t
+  :defer t
+  :init
+  (with-eval-after-load 'ace-window
+    (define-key ace-window-keymap (kbd "M-0") #'treemacs-select-window))
+  :config
+  (progn
+    (setq treemacs-eldoc-display                   'simple
+	  treemacs-silent-filewatch                nil
+	  treemacs-silent-refresh                  nil
+	  treemacs-sorting                         'alphabetic-asc
+	  treemacs-text-scale                      nil)
 
- (use-package centaur-tabs
-   :load-path "~/.emacs.d/other/centaur-tabs"
-   :config
-   (setq centaur-tabs-style "bar"
-	  centaur-tabs-height 32
-	  centaur-tabs-set-icons t
-	  centaur-tabs-gray-out-icons 'buffer
-	  centaur-tabs-set-close-button nil
+    ;; The default width and height of the icons is 22 pixels. If you are
+    ;; using a Hi-DPI display, uncomment this to double the icon size.
+    ;;(treemacs-resize-icons 44)
 
-	  centaur-tabs-set-modified-marker t
-	  centaur-tabs-show-navigation-buttons t
-	  centaur-tabs-set-bar 'under
-	  x-underline-at-descent-line t)
-   (centaur-tabs-headline-match)
-   ;; (setq centaur-tabs-gray-out-icons 'buffer)
-   ;; (centaur-tabs-enable-buffer-reordering)
-   ;; (setq centaur-tabs-adjust-buffer-order t)
-   (centaur-tabs-mode t)
-   (setq uniquify-separator "/")
-   (setq uniquify-buffer-name-style 'forward)
-   (defun centaur-tabs-buffer-groups ()
-     "`centaur-tabs-buffer-groups' control buffers' group rules.
+    (when treemacs-python-executable
+      (treemacs-git-commit-diff-mode t))
+
+    (pcase (cons (not (null (executable-find "git")))
+                 (not (null treemacs-python-executable)))
+      (`(t . t)
+       (treemacs-git-mode 'deferred))
+      (`(t . _)
+       (treemacs-git-mode 'simple)))
+
+    (treemacs-hide-gitignored-files-mode nil)))
+
+
+(use-package treemacs-evil
+  :after (treemacs evil)
+  :ensure t)
+
+(use-package treemacs-projectile
+  :after (treemacs projectile)
+  :ensure t)
+
+(use-package treemacs-icons-dired
+  :hook (dired-mode . treemacs-icons-dired-enable-once)
+  :ensure t)
+
+(use-package treemacs-magit
+  :after (treemacs magit)
+  :ensure t)
+
+
+(use-package centaur-tabs
+  :load-path "~/.emacs.d/other/centaur-tabs"
+  :config
+  (setq centaur-tabs-style "bar"
+	centaur-tabs-height 32
+	centaur-tabs-set-icons t
+	centaur-tabs-gray-out-icons 'buffer
+	centaur-tabs-set-close-button nil
+
+	centaur-tabs-set-modified-marker t
+	centaur-tabs-show-navigation-buttons t
+	centaur-tabs-set-bar 'under
+	x-underline-at-descent-line t)
+  (centaur-tabs-headline-match)
+  ;; (setq centaur-tabs-gray-out-icons 'buffer)
+  ;; (centaur-tabs-enable-buffer-reordering)
+  ;; (setq centaur-tabs-adjust-buffer-order t)
+  (centaur-tabs-mode t)
+  (setq uniquify-separator "/")
+  (setq uniquify-buffer-name-style 'forward)
+  (defun centaur-tabs-buffer-groups ()
+    "`centaur-tabs-buffer-groups' control buffers' group rules.
 
  Group centaur-tabs with mode if buffer is derived from `eshell-mode' `emacs-lisp-mode' `dired-mode' `org-mode' `magit-mode'.
  All buffer name start with * will group to \"Emacs\".
  Other buffer group by `centaur-tabs-get-group-name' with project name."
-     (list
-      (cond
-	;; ((not (eq (file-remote-p (buffer-file-name)) nil))
-	;; "Remote")
-	((or (string-equal "*" (substring (buffer-name) 0 1))
-	     (memq major-mode '(magit-process-mode
-				magit-status-mode
-				magit-diff-mode
-				magit-log-mode
-				magit-file-mode
-				magit-blob-mode
-				magit-blame-mode
-				)))
-	 "Emacs")
-	((derived-mode-p 'prog-mode)
-	 "Editing")
-	((derived-mode-p 'dired-mode)
-	 "Dired")
-	((memq major-mode '(helpful-mode
-			    help-mode))
-	 "Help")
-	((memq major-mode '(org-mode
-			    org-agenda-clockreport-mode
-			    org-src-mode
-			    org-agenda-mode
-			    org-beamer-mode
-			    org-indent-mode
-			    org-bullets-mode
-			    org-cdlatex-mode
-			    org-agenda-log-mode
-			    diary-mode))
-	 "OrgMode")
-	(t
-	 (centaur-tabs-get-group-name (current-buffer))))))
-   :hook
-   (dashboard-mode . centaur-tabs-local-mode)
-   (term-mode . centaur-tabs-local-mode)
-   (calendar-mode . centaur-tabs-local-mode)
-   (org-agenda-mode . centaur-tabs-local-mode)
-   (helpful-mode . centaur-tabs-local-mode)
-   :bind
-   ;; ("C-<prior>" . centaur-tabs-backward)
-   ;; ("C-<next>" . centaur-tabs-forward)
-   ;; ("C-c t s" . centaur-tabs-counsel-switch-group)
-   ;; ("C-c t p" . centaur-tabs-group-by-projectile-project)
-   ;; ("C-c t g" . centaur-tabs-group-buffer-groups)
-   (:map evil-normal-state-map
-	  ("g t" . centaur-tabs-forward)
-	  ("g T" . centaur-tabs-backward)))
+    (list
+     (cond
+      ;; ((not (eq (file-remote-p (buffer-file-name)) nil))
+      ;; "Remote")
+      ((or (string-equal "*" (substring (buffer-name) 0 1))
+	   (memq major-mode '(magit-process-mode
+			      magit-status-mode
+			      magit-diff-mode
+			      magit-log-mode
+			      magit-file-mode
+			      magit-blob-mode
+			      magit-blame-mode
+			      )))
+       "Emacs")
+      ((derived-mode-p 'prog-mode)
+       "Editing")
+      ((derived-mode-p 'dired-mode)
+       "Dired")
+      ((memq major-mode '(helpful-mode
+			  help-mode))
+       "Help")
+      ((memq major-mode '(org-mode
+			  org-agenda-clockreport-mode
+			  org-src-mode
+			  org-agenda-mode
+			  org-beamer-mode
+			  org-indent-mode
+			  org-bullets-mode
+			  org-cdlatex-mode
+			  org-agenda-log-mode
+			  diary-mode))
+       "OrgMode")
+      (t
+       (centaur-tabs-get-group-name (current-buffer))))))
+  :hook
+  (dashboard-mode . centaur-tabs-local-mode)
+  (term-mode . centaur-tabs-local-mode)
+  (calendar-mode . centaur-tabs-local-mode)
+  (org-agenda-mode . centaur-tabs-local-mode)
+  (helpful-mode . centaur-tabs-local-mode)
+  :bind
+  ;; ("C-<prior>" . centaur-tabs-backward)
+  ;; ("C-<next>" . centaur-tabs-forward)
+  ;; ("C-c t s" . centaur-tabs-counsel-switch-group)
+  ;; ("C-c t p" . centaur-tabs-group-by-projectile-project)
+  ;; ("C-c t g" . centaur-tabs-group-buffer-groups)
+  (:map evil-normal-state-map
+	("g t" . centaur-tabs-forward)
+	("g T" . centaur-tabs-backward)))
 
 (provide 'ui)

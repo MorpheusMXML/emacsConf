@@ -24,13 +24,14 @@
   "SPC" '(:ignore t :which-key "Minormode Binds")
   "SPC p" 'fill-paragraph
   "SPC SPC" 'counsel-M-x
-   
+  
   "a" 'ace-select-window
   "d" 'dired
   "D" 'dired-other-window
   "f" 'counsel-find-file
   "F" 'mabr/find-file-sudo
   "g" 'magit-status
+  "T" 'treemacs-select-window
   "j" 'evil-avy-goto-line
   "i" 'counsel-imenu
   "y" 'counsel-yank-pop
@@ -41,10 +42,10 @@
   "/" 'swiper
   ";" 'evilnc-comment-or-uncomment-lines
   "." 'save-buffer
- ;")" 'evil-forward-section-end
- ;"(" 'evil-backward-section-begin
+					;")" 'evil-forward-section-end
+					;"(" 'evil-backward-section-begin
   
- ;; window stuff
+  ;; window stuff
   "w" '(:ignore t :which-key "Window")
   "w w" 'other-window
   "w v" 'split-window-right
@@ -65,6 +66,7 @@
 
   ;; kill stuff
   "k" '(:ignore t :which-key "Kill")
+  "k t" 'treemacs
   "k b" 'kill-buffer
   "k w" 'delete-window
   "k W" 'kill-buffer-and-window
