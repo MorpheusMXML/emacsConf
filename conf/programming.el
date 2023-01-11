@@ -27,11 +27,11 @@
 ;; YASNIPPET: Code Snippets
 
 (use-package yasnippet)
+(yas-global-mode t)
 (use-package yasnippet-snippets
   :straight t
   :defer t)
 
-(require 'yasnippet)
 (yas-reload-all)
 ;; hooks
 (add-hook 'prog-mode-hook 'yas-minor-mode)
@@ -84,7 +84,8 @@
   :straight t
   :hook ((js-mode
 	  js-jsx-mode
-	  python-mode))
+	  python-mode
+	  LaTex-mode))
   :commands (lsp lsp-deferred)
   :config
   (lsp-enable-which-key-integration t))
@@ -112,6 +113,13 @@
       lsp-ui-peek-enable nil
       lsp-ui-flycheck-enable t
       lsp-ui-sideline-enable nil)
+
+(use-package lsp-treemacs
+  :after lsp
+  :commands lsp-treemacs-errors-list)
+(lsp-treemacs-sync-mode 1)
+
+(use-package lsp-ivy)
 
 (use-package platformio-mode
   :straight t)
@@ -156,15 +164,18 @@
 (mabr-leader
   :states 'normal
   :keymaps 'lsp-mode-map
+  "SPC l" '(:ignore t :which-key "LSP Server")
   "SPC l i" 'lsp-organize-imports
   "SPC l c" 'lsp-describe-session
   "SPC l r" 'lsp-restart-workspace
+  "SPC g" '(:ignore t :which-key "go to")
   "SPC g d" 'lsp-find-definition
   "SPC g D" 'lsp-find-declaration
   "SPC g t" 'lsp-goto-type-definition
   "SPC r" 'lsp-rename
   "SPC d" 'lsp-ui-doc-toggle
   "SPC i" 'imenu
+  "SPC t" 'lsp-treemacs-errors-list
   "SPC p i" 'ivy-imenu-anywhere)
 
 ;; DAP: Debug Adapter Protocol is a wire protocol for communication

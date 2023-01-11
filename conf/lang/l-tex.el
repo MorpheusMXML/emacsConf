@@ -5,15 +5,21 @@
   :config
   (company-auctex-init))
 
-
+;;(use-package lsp-latex)
+(setq lsp-tex-server 'digestif)
 ;; Load Auxtex
 (load "auctex.el" nil t t)
 
 ;; Some mode to be hooked
+(add-hook 'LaTeX-mode-hook 'LaTeX-math-mode)
 (add-hook 'LaTeX-mode-hook 'visual-line-mode)
 (add-hook 'LaTeX-mode-hook 'flyspell-mode)
-(add-hook 'LaTeX-mode-hook 'LaTeX-math-mode)
+(add-hook 'LaTex-math-mode-hook 'lsp)
 
+(with-eval-after-load "bibtex"
+  (add-hook 'bibtex-mode-hook 'lsp))
+(with-eval-after-load "biber"
+  (add-hook 'biber-mode-hook 'lsp))
 ;; hooking up and setting reftex
 (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
 (setq reftex-plug-into-AUCTeX t)
@@ -62,9 +68,9 @@
   (add-to-list 'org-latex-classes
 	       '("org-plain-latex"
 		 "\\documentclass{article}
-     [NO-DEFAULT-PACKAGES]
-     [PACKAGES]
-     [EXTRA]"
+[NO-DEFAULT-PACKAGES]
+[PACKAGES]
+[EXTRA]"
 		 ("\\section{%s}" . "\\section*{%s}")
 		 ("\\subsection{%s}" . "\\subsection*{%s}")
 		 ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
