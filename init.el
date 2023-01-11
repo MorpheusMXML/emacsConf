@@ -1,3 +1,5 @@
+(setq gc-cons-threshold most-positive-fixnum)
+
 ;; install straight.el
 (defvar bootstrap-version)
 (let ((bootstrap-file
@@ -111,3 +113,6 @@ unreadable. Returns the names of envvars that were changed."
 (setq epa-pinentry-mode 'loopback)
 (setq insert-directory-program "gls" dired-use-ls-dired t)
 (setq mac-pass-command-to-system nil)
+
+;; set gc values back to smth reasonable
+(setq gc-cons-threshold 104857600) ;; 100 MegaByte (LSP)
