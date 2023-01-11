@@ -21,8 +21,6 @@
 
 ;; (require 'a-orgmode)
 (with-eval-after-load 'org (require 'a-orgmode))
-;; PEEP-DIRED: preview files in dired
-(use-package peep-dired)
 ;; variables
 (setq peep-dired-cleanup-on-disable t
       peep-dired-enable-on-directories t)
