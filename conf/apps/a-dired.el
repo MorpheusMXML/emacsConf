@@ -1,7 +1,7 @@
 ;; DIRED: Filebrowser
 (use-package dired-narrow)
 
-(setq dired-listing-switches "-lFahv --group-directories-first"
+(setq dired-listing-switches "-lFahvgG --group-directories-first"
       dired-dwim-target t
       dired-ls-F-marks-symlinks t)
 
