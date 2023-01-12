@@ -26,8 +26,8 @@
   "SPC SPC" 'counsel-M-x
   
   "a" 'ace-select-window
-  "d" 'dired
-  "D" 'dired-other-window
+  ;; "d" 'dired
+  ;; "D" 'dired-other-window
   "f" 'counsel-find-file
   "F" 'mabr/find-file-sudo
   "g" 'magit-status
@@ -36,6 +36,7 @@
   "i" 'counsel-imenu
   "y" 'counsel-yank-pop
   "h" 'mabr/new-dashboard
+  "r" 'ranger
   
   "8" 'insert-char
 
@@ -56,6 +57,13 @@
   "w J" 'windsize-down
   "w K" 'windsize-up
 
+  ;; Dired stuff
+  "d" '(:ignore t :which-key "Dired")
+  "d d" 'dired
+  "d f" 'dired-other-frame
+  "d w" 'dired-other-window
+  "d s" 'find-dired
+
   ;; switch stuff
   "s" '(:ignore t :which-key "Switch")
   "s b" 'switch-to-buffer
@@ -67,6 +75,7 @@
   ;; kill stuff
   "k" '(:ignore t :which-key "Kill")
   "k t" 'treemacs
+  "k f" 'delete-frame
   "k b" 'kill-buffer
   "k w" 'delete-window
   "k W" 'kill-buffer-and-window

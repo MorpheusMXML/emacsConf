@@ -15,6 +15,8 @@
 (add-hook 'LaTeX-mode-hook 'visual-line-mode)
 (add-hook 'LaTeX-mode-hook 'flyspell-mode)
 (add-hook 'LaTex-math-mode-hook 'lsp)
+(add-hook 'LaTeX-mode-hook 'TeX-PDF-mode)
+(add-hook 'LaTeX-mode-hook 'TeX-source-correlate-mode)
 
 (with-eval-after-load "bibtex"
   (add-hook 'bibtex-mode-hook 'lsp))
@@ -30,7 +32,8 @@
 
 ;; for parentheses
 (setq LaTeX-electric-left-right-brace 1)
-
+(setq TeX-source-correlate-method 'synctex)
+(setq TeX-source-correlate-start-server t)
 ;; For emacs to know where is pdflatex
 (setenv "PATH"
 	(concat

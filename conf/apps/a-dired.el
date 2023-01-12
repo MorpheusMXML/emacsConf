@@ -14,6 +14,7 @@
 ;;   (setq peep-dired-cleanup-eagerly t)
 ;;   (setq peep-dired-enable-on-directories t))
 
+;; (use-package nav)
 
 (use-package ranger
   :config
@@ -33,9 +34,11 @@
 (general-def
   :states 'normal
   :keymaps 'dired-mode-map
-  "n" 'dired-narrow
+  "f" 'dired-narrow
   "p" 'ranger
   "E" 'sudired
+  "d" 'epa-dired-do-decrypt
+  "e" 'epa-dired-do-encrypt
   "P" (lambda() (interactive) (start-process "SHOW PICS" "*NOMACS*" "nomacs"
                                              (file-name-directory (dired-get-filename))))
   "h" (lambda() (interactive) (find-alternate-file ".."))

@@ -148,8 +148,8 @@
 ;; variables
 (setq evil-collection-setup-minibuffer t
       evil-collection-mode-list
-      '(ibuffer help calc nov man calendar ivy minibuffer dired debug
-        doc-view arc-mode magit vterm))
+      '(ibuffer help calc nov man calendar ivy minibuffer dired debug calc company dashboard elisp-mode epa flycheck forge help helpful imenu imenu-list js2-mode mu4e (pdf pdf-view) vterm vundo which-key 
+		doc-view arc-mode magit vterm))
 ;; start mode
 (evil-collection-init)
 
