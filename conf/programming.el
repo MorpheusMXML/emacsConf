@@ -85,7 +85,8 @@
   :hook ((js-mode
 	  js-jsx-mode
 	  python-mode
-	  LaTex-mode))
+	  LaTex-mode
+	  LaTeX-math-mode))
   :commands (lsp lsp-deferred)
   :config
   (lsp-enable-which-key-integration t))

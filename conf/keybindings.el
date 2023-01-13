@@ -28,12 +28,11 @@
   "a" 'ace-select-window
   ;; "d" 'dired
   ;; "D" 'dired-other-window
-  "f" 'counsel-find-file
-  "F" 'mabr/find-file-sudo
+  ;; "f" 'counsel-find-file
+  ;; "F" 'mabr/find-file-sudo
   "g" 'magit-status
   "T" 'treemacs-select-window
   "j" 'evil-avy-goto-line
-  "i" 'counsel-imenu
   "y" 'counsel-yank-pop
   "h" 'mabr/new-dashboard
   "r" 'ranger
@@ -45,6 +44,17 @@
   "." 'save-buffer
 					;")" 'evil-forward-section-end
 					;"(" 'evil-backward-section-begin
+
+  ;; Filte Stuff
+  "f"     '(:ignore t :which-key "File Stuff")
+  "f f"   '(find-file :which-key "Find file")
+  "f r"   '(counsel-recentf :which-key "Recent files")
+  "f s"   '(save-buffer :which-key "Save file")
+  "f u"   '(mabr/find-file-sudo :which-key "Sudo find file")
+  "f y"   '(mabr/show-and-copy-buffer-path :which-key "Yank file path")
+  "f C"   '(copy-file :which-key "Copy file")
+  "f D"   '(delete-file :which-key "Delete file")
+  "f R"   '(rename-file :which-key "Rename file")
   
   ;; window stuff
   "w" '(:ignore t :which-key "Window")
@@ -68,6 +78,7 @@
   ;; Dired stuff
   "d" '(:ignore t :which-key "Dired")
   "d d" 'dired
+  "d j" 'dired-jump
   "d f" 'dired-other-frame
   "d w" 'dired-other-window
   "d s" 'find-dired
@@ -130,8 +141,10 @@
   "t v" 'mabr/new-vterm
   "t u" 'vundo
   "t c" 'org-capture
-  "t i" '(:ignore t :which-key "Insert")
-  "t i t" 'mabr/insert-current-timestamp
+  "t i" '(counsel-imenu :which-key "iMenu") 
+
+  "i" '(:ignore t :which-key "Insert")
+  "i t" '(mabr/insert-current-timestamp :which-key "Insert Timestamp")
 
   "c" '(:ignore t :which-key "Modes")
   "c s" 'flyspell-mode

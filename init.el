@@ -1,4 +1,3 @@
-(setq gc-cons-threshold most-positive-fixnum)
 
 ;; install straight.el
 (defvar bootstrap-version)
@@ -19,6 +18,16 @@
 
 (use-package straight
   :custom (straight-use-package-by-default t))
+
+
+;; Using garbage magic hack.
+(use-package gcmh
+  :config
+  (gcmh-mode 1))
+;; Setting garbage collection threshold
+(setq gc-cons-threshold 402653184
+      gc-cons-percentage 0.6)
+
 
 ;; Don't litter my init file
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))

@@ -1,9 +1,11 @@
 (use-package tex
-  :straight auctex)
+  :straight auctex
+  :ensure t)
 
 (use-package company-auctex
   :config
-  (company-auctex-init))
+  (company-auctex-init)
+  :ensure t)
 
 ;;(use-package lsp-latex)
 (setq lsp-tex-server 'digestif)
@@ -14,7 +16,7 @@
 (add-hook 'LaTeX-mode-hook 'LaTeX-math-mode)
 (add-hook 'LaTeX-mode-hook 'visual-line-mode)
 (add-hook 'LaTeX-mode-hook 'flyspell-mode)
-(add-hook 'LaTex-math-mode-hook 'lsp)
+(add-hook 'LaTex-mode-hook 'lsp)
 (add-hook 'LaTeX-mode-hook 'TeX-PDF-mode)
 (add-hook 'LaTeX-mode-hook 'TeX-source-correlate-mode)
 
@@ -32,8 +34,6 @@
 
 ;; for parentheses
 (setq LaTeX-electric-left-right-brace 1)
-(setq TeX-source-correlate-method 'synctex)
-(setq TeX-source-correlate-start-server t)
 ;; For emacs to know where is pdflatex
 (setenv "PATH"
 	(concat
@@ -48,7 +48,8 @@
 ;;     TeX-command-list)))
 ;; (add-hook 'TeX-mode-hook '(lambda () (setq TeX-command-default "latexmk")))
 
-(use-package auctex-latexmk)
+(use-package auctex-latexmk
+  :ensure t)
 (auctex-latexmk-setup)
 (setq auctex-latexmk-inherit-TeX-PDF-mode t)
 ;; To invoke Skim using shift-command-click
@@ -94,9 +95,10 @@
 
       ;; PDF_Tools as PDF Viewer for Latex compiled Files
       TeX-view-program-selection '((output-pdf "PDF Tools"))
-      TeX-view-program-list '(("pdf-tools" "TeX-pdf-tools-sync-view"))
+      TeX-view-program-list '(("PDF-tools" TeX-pdf-tools-sync-view))
       TeX-source-correlate-start-server t
       TeX-source-correlate-method 'synctex
+      TeX-source-correlate-mode t
       ;; Choose pdflatex
       TeX-PDF-mode t
       TeX-DVI-via-PDFTeX t
@@ -111,6 +113,10 @@
          (file (concat dir "/auto/" fname)))
     (message (concat "Reverting file: " file))
     (TeX-revert-document-buffer file)))
+
+(add-hook 'after-save-hook (lambda ()
+			     (when (eq major-mode 'LaTeX-mode)
+			       (TeX-command-run-all))))
 
 ;; (add-hook 'TeX-after-compilation-finished-functions #'mabr/revert-latex-document-buffer)
 

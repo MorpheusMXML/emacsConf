@@ -1,6 +1,8 @@
 ; This goes into your emacs config file
 (use-package pdf-tools
   :ensure t
+  :init
+  (pdf-tools-install)
   :config
   (setq pdf-info-epdfinfo-program "/usr/local/bin/epdfinfo")
   (setq-default pdf-view-display-size 'fit-page)
