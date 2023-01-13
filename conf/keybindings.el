@@ -49,14 +49,22 @@
   ;; window stuff
   "w" '(:ignore t :which-key "Window")
   "w w" 'other-window
-  "w v" 'split-window-right
-  "w h" 'split-window-below
-  "w f" 'toggle-maximize-buffer
+  ;; "w v" 'split-window-right
+  ;; "w h" 'split-window-below
+  "w m" 'toggle-maximize-buffer
+  "w b" 'balance-windows
   "w L" 'windsize-right
   "w H" 'windsize-left
   "w J" 'windsize-down
   "w K" 'windsize-up
+  ;; "w f" 'make-frame-on-monitor
 
+  "w s" '(:ignore t :which-key "Split")
+  "w s s" 'split-window-below
+  "w s d" 'split-window-right
+  "w s f" 'make-frame-on-monitor
+
+  
   ;; Dired stuff
   "d" '(:ignore t :which-key "Dired")
   "d d" 'dired
@@ -71,6 +79,7 @@
   "s p" 'switch-to-prev-buffer
   "s s" 'counsel-switch-buffer
   "s w" 'ace-swap-window
+  "s f" 'other-frame
 
   ;; kill stuff
   "k" '(:ignore t :which-key "Kill")

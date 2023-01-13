@@ -81,16 +81,20 @@
 		 ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))))
 ;; variables
 (setq TeX-auto-save t
-;; Always parse the file upon opening
+      ;; Always parse the file upon opening
       TeX-parse-self t
       TeX-save-query nil
-      TeX-view-program-selection '((output-pdf "PDF Viewer"))
+      ;; TeX-view-program-selection '((output-pdf "PDF Viewer"))
       ;; TeX-view-program-list '(("PDF Tools" TeX-pdf-tools-sync-view))
-;; use Skim as default pdf viewer
-;; Skim's displayline is used for forward search (from .tex to .pdf)
-;; option -b highlights the current line; option -g opens Skim in the background  
-      TeX-view-program-list
-     '(("PDF Viewer" "/Applications/Skim.app/Contents/SharedSupport/displayline -b %n %o %b"))
+      ;; use Skim as default pdf viewer
+      ;; Skim's displayline is used for forward search (from .tex to .pdf)
+      ;; option -b highlights the current line; option -g opens Skim in the background  
+      ;; TeX-view-program-list
+      ;; '(("PDF Viewer" "/Applications/Skim.app/Contents/SharedSupport/displayline -b %n %o %b"))
+
+      ;; PDF_Tools as PDF Viewer for Latex compiled Files
+      TeX-view-program-selection '((output-pdf "PDF Tools"))
+      TeX-view-program-list '(("pdf-tools" "TeX-pdf-tools-sync-view"))
       TeX-source-correlate-start-server t
       TeX-source-correlate-method 'synctex
       ;; Choose pdflatex
@@ -108,7 +112,9 @@
     (message (concat "Reverting file: " file))
     (TeX-revert-document-buffer file)))
 
-(add-hook 'TeX-after-compilation-finished-functions #'mabr/revert-latex-document-buffer)
+;; (add-hook 'TeX-after-compilation-finished-functions #'mabr/revert-latex-document-buffer)
+
+(add-hook 'TeX-after-compilation-finished-functions #'TeX-revert-document-buffer)
 
 ;; keybindings
 (mabr-leader
