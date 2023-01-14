@@ -8,6 +8,7 @@
 (require 'a-ein)
 (require 'a-vterm)
 (require 'a-mu4e)
+(require 'a-writing)
 ;; ;; PDF-TOOLS
 (require 'a-pdf-tools)
 ;; ORGMODE 

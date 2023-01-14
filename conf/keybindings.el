@@ -145,7 +145,11 @@
 
   "i" '(:ignore t :which-key "Insert")
   "i t" '(mabr/insert-current-timestamp :which-key "Insert Timestamp")
-
+  "i p" '(academic-phrases :which-key "Lookup Academic Phrases")
+  "i d" '(powerthesaurus-lookup-definitions-dwim :which-key "Definitions")
+  "i s" '(powerthesaurus-lookup-synonyms-dwim :which-key "Synonyms")
+  "i a" '(powerthesaurus-lookup-dwim :which-key "Alternative Word")
+  
   "c" '(:ignore t :which-key "Modes")
   "c s" 'flyspell-mode
   

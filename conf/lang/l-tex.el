@@ -19,7 +19,7 @@
 (add-hook 'LaTex-mode-hook 'lsp)
 (add-hook 'LaTeX-mode-hook 'TeX-PDF-mode)
 (add-hook 'LaTeX-mode-hook 'TeX-source-correlate-mode)
-
+(add-hook 'LaTeX-mode-hook 'drag-stuff-mode)
 (with-eval-after-load "bibtex"
   (add-hook 'bibtex-mode-hook 'lsp))
 (with-eval-after-load "biber"
@@ -103,7 +103,7 @@
       TeX-PDF-mode t
       TeX-DVI-via-PDFTeX t
       LaTeX-item-indent 0
-      ispell-dictionary "german")
+      ispell-dictionary "english")
 
 (defun mabr/revert-latex-document-buffer (pdf)
   (let* ((parts (split-string pdf "/"))

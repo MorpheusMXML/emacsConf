@@ -53,7 +53,7 @@
   :init (doom-modeline-mode 1)
   :custom ((doom-modeline-height 15)
 	   (doom-modeline-enable-word-count t))) 
-
+(display-time)
 
 ;; (use-package doom-themes
 ;;   :init (load-theme 'doom-dark+ t))
