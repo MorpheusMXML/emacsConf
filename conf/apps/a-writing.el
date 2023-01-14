@@ -3,4 +3,4 @@
 (use-package powerthesaurus)
 
 
-(provide writing)
+(provide 'a-writing)

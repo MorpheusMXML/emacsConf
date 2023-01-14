@@ -2,15 +2,17 @@
   :straight auctex
   :ensure t)
 
+
 (use-package company-auctex
   :config
   (company-auctex-init)
   :ensure t)
 
-;;(use-package lsp-latex)
 (setq lsp-tex-server 'digestif)
-;; Load Auxtex
+
 (load "auctex.el" nil t t)
+
+(setq debug-on-error t)
 
 ;; Some mode to be hooked
 (add-hook 'LaTeX-mode-hook 'LaTeX-math-mode)
@@ -46,15 +48,17 @@
 ;;     '("latexmk" "latexmk -pvc -pdf %s" TeX-run-TeX nil t
 ;;       :help "Run latexmk on file")
 ;;     TeX-command-list)))
-;; (add-hook 'TeX-mode-hook '(lambda () (setq TeX-command-default "latexmk")))
 
 (use-package auctex-latexmk
-  :ensure t)
-(auctex-latexmk-setup)
-(setq auctex-latexmk-inherit-TeX-PDF-mode t)
-;; To invoke Skim using shift-command-click
-(add-hook 'LaTeX-mode-hook
-          (lambda () (local-set-key (kbd "<M-s-mouse-1>") #'TeX-view)))
+  :ensure t
+  :init
+  (with-eval-after-load 'tex
+    (auctex-latexmk-setup))
+  :config
+  (add-hook 'TeX-mode-hook '(lambda () (setq TeX-command-default "LatexMk")))
+  (add-hook 'LaTeX-mode-hook
+            (lambda () (local-set-key (kbd "<M-s-mouse-1>") #'TeX-view)))
+  (setq auctex-latexmk-inherit-TeX-PDF-mode t))
 
 ;; Error handling
 (setq TeX-display-help nil)
@@ -126,8 +130,9 @@
 (mabr-leader
   :states 'normal
   :keymaps 'LaTeX-mode-map
-  "SPC c" (lambda () (interactive) (save-buffer) (TeX-command "LaTeX" 'TeX-master-file))
-  "SPC b" (lambda () (interactive) (save-buffer) (TeX-command "Biber" 'TeX-master-file))
+  "SPC c" '((lambda () (interactive) (save-buffer) (TeX-command "LatexMk" 'TeX-master-file)) :which-key "Compile")
+  "SPC b" '((lambda () (interactive) (save-buffer) (TeX-command "Biber" 'TeX-master-file)) :which-key "Biber")
+  "SPC v" '(TeX-view :which-key "View PDF")
   "SPC p" 'fill-paragraph
   "=" 'align-current
   )
