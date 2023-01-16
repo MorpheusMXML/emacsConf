@@ -104,7 +104,7 @@
         (type "MEET(m)")
         (type "IDEA(i)")
 	(type "READ(r)"))
-            org-todo-keyword-faces
+      org-todo-keyword-faces
       '(("TODO" :inherit org-todo :weight bold)
         ("DONE" :inherit org-done :weight bold)
         ("NEXT" :foreground "#A2DFED" :weight bold)
@@ -118,7 +118,10 @@
       ;; ORG CAPTURE
       org-directory "~/mvtn/private/stc"
       org-capture-templates
-      `(("i" "Idea"
+      `(("a" "Appointment" 
+         entry (file ,"~/org/Agenda/iCloud/gcal.org")
+         "* %?\n:PROPERTIES:\n:calendar-id:\tbrosiusmax@gmail.com\n:END:\n:org-gcal:\n%^T--%^T\n:END:\n\n" :jump-to-captured t)
+	      ("i" "Idea"
          entry (file+headline ,(concat org-directory "/20220202-000000 prv.org") "Ideas")
          "* IDEA %?\n %T\n")
         ("n" "Note"
@@ -127,11 +130,11 @@
         ("r" "Read later"
          entry (file+headline ,(concat org-directory "/20220202-000000 prv.org") "Read later")
          "* READ %?\n %T\n")
-	("t" "Capture TODO")
+	      ("t" "Capture TODO")
         ("tp" "Private Task" entry (file+olp "~/org/Agenda/private.org" "Inbox")
-        "** TODO %?\n %U\n %a\n %i" :empty-lines 1)
+         "** TODO %?\n %U\n %a\n %i" :empty-lines 1)
         ("tw" "Work Task" entry (file+olp "~/org/Agenda/Glou.org" "Inbox")
-        "** TODO %?\n %U\n %a\n %i" :empty-lines 1))
+         "** TODO %?\n %U\n %a\n %i" :empty-lines 1))
 
       org-default-notes-file (concat org-directory "/20220203-000000 refile.org"))
 
@@ -230,6 +233,17 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
       org-clock-report-include-clocking-task t)
 
 (org-clock-persistence-insinuate)
+
+;; GLCAL SYNC
+;; -----------------------------------------------------------------------------------------------------------------------------------
+(setq plstore-cache-passphrase-for-symmetric-encryption t)
+
+(use-package org-gcal
+  :ensure t
+  :config
+  (setq org-gcal-client-id "1006499711907-l4h30jr70qqdbrrc7ss3rphsfuld1jmd.apps.googleusercontent.com"
+	org-gcal-client-secret "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"
+	org-gcal-file-alist '(("brosiusmax@gmail.com" .  "/Users/morpheus/org/Agenda/iCloud/gcal.org"))))
 
 ;; KEYBINDINGS
 (general-def
