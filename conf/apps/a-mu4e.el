@@ -349,4 +349,29 @@
   (mu4e-alert-enable-notifications))
 
 
+(defun mabr/mu4e-choose-signature ()
+  "Insert one of a number of predefined Signatures into Message Buffer"
+  (interactive)
+  (let ((message-signature
+	 (mu4e-read-option "Signature:"
+			   '(("formal Private" .
+			      (concat
+			       "Maximilian Brosius\n"
+			       "In urgent cases don't use E-Mail - call me 2x!!\n"
+			       "\n"
+			       "mail@maxbrosius.de\n"
+			       "+49 173 49 838 56\n"))
+			     ("informal" .
+			      "Max\n")))))
+    (message-insert-signature)))
+
+
+(general-def
+  :states 'normal
+  :keymaps 'mu4e-compose-mode-map
+  "a" '(mail-attach-file :which-key "Attachment")
+  "q" '(message-dont-send :which-key "Cancel Compose")
+  "s" '(mabr/mu4e-choose-signature :which-key "Signature")
+  "b" '(message-goto-body :which-key "Jump to Body"))
+
 (provide 'a-mu4e)
