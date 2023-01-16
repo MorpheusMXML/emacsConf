@@ -131,16 +131,25 @@
 (use-package company-arduino
   :straight t)
 
+;; FIC: Highlight TODO/FIXME/etc. in code comments
+(straight-use-package 'fic-mode)
+(setq fic-highlighted-words '("FIXME" "TODO" "BUG" "NOTE"))
+(add-hook 'prog-mode-hook 'fic-mode)
+
 ;; Additional languages with more config
 (push (concat user-emacs-directory "conf/lang") load-path)
-
 ;; load languages if required
+
+;; WORKAROUND TODO FIXME
+;; since AUCTEX sets Local vars in the .tex files it also sets the Mode to latex
+;; this somehow causes issues with the auto mode list call loading the l-latex config....
+(require 'l-latex)
+
 ;; (push '("\\.rs\\'" . (lambda () (require 'l-rust) (rust-mode))) auto-mode-alist)
-;; (push '("\\.thy\\'" . (lambda () (require 'l-isabelle) (isar-mode))) auto-mode-alist)
 (push '("\\.go\\'" . (lambda () (require 'l-go) (go-mode))) auto-mode-alist)
 ;; (push '("\\.\\([ch]pp\\|cc\\)\\'" . (lambda () (require 'l-cc) (c++-mode))) auto-mode-alist)
 ;; (push '("\\.[ch]\\'" . (lambda () (require 'l-cc) (c-mode))) auto-mode-alist)
-(push '("\\.tex\\'" . (lambda () (require 'l-tex) (LaTeX-mode))) auto-mode-alist)
+(push '("\\.tex\\'" . (lambda () (require 'l-latex) (LaTeX-mode))) auto-mode-alist)
 (push '("\\.el\\'" . (lambda () (require 'l-elisp) (emacs-lisp-mode))) auto-mode-alist)
 ;; (push '("\\.js\\'" . (lambda () (require 'lsp-typescript) (javascript-mode))) auto-mode-alist)
 (push '("\\.py\\'" . (lambda () (require 'l-python) (python-mode))) auto-mode-alist)

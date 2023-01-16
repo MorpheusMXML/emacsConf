@@ -1,4 +1,4 @@
-
+(setq gc-cons-threshold most-positive-fixnum)
 ;; install straight.el
 (defvar bootstrap-version)
 (let ((bootstrap-file
@@ -21,12 +21,12 @@
 
 
 ;; Using garbage magic hack.
-(use-package gcmh
-  :config
-  (gcmh-mode 1))
-;; Setting garbage collection threshold
-(setq gc-cons-threshold 402653184
-      gc-cons-percentage 0.6)
+;; (use-package gcmh
+;;   :config
+;;   (gcmh-mode 1))
+;; ;; Setting garbage collection threshold
+;; (setq gc-cons-threshold 402653184
+;;       gc-cons-percentage 0.6)
 
 
 ;; Don't litter my init file

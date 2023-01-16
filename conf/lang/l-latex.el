@@ -1,6 +1,9 @@
+(message "Loading LaTeX Settings...")
+(setq debug-on-error t)
 (use-package tex
   :straight auctex
   :ensure t)
+(load "auctex.el" nil t t)
 
 
 (use-package company-auctex
@@ -10,9 +13,6 @@
 
 (setq lsp-tex-server 'digestif)
 
-(load "auctex.el" nil t t)
-
-(setq debug-on-error t)
 
 ;; Some mode to be hooked
 (add-hook 'LaTeX-mode-hook 'LaTeX-math-mode)
@@ -52,13 +52,12 @@
 (use-package auctex-latexmk
   :ensure t
   :init
-  (with-eval-after-load 'tex
-    (auctex-latexmk-setup))
+  (auctex-latexmk-setup)
   :config
-  (add-hook 'TeX-mode-hook '(lambda () (setq TeX-command-default "LatexMk")))
+  (setq auctex-latexmk-inherit-TeX-PDF-mode t)
+  (add-hook 'TeX-mode-hook #'(lambda () (setq TeX-command-default "LatexMk")))
   (add-hook 'LaTeX-mode-hook
-            (lambda () (local-set-key (kbd "<M-s-mouse-1>") #'TeX-view)))
-  (setq auctex-latexmk-inherit-TeX-PDF-mode t))
+            (lambda () (local-set-key (kbd "<M-s-mouse-1>") #'TeX-view))))
 
 ;; Error handling
 (setq TeX-display-help nil)
@@ -137,4 +136,4 @@
   "=" 'align-current
   )
 
-(provide 'l-tex)
+(provide 'l-latex)
