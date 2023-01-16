@@ -332,8 +332,8 @@
           (defun mabr/add-cc-and-bcc ()
             "My Function to automatically add Cc & Bcc: headers.
     This is in the mu4e compose mode."
-            (save-excursion (message-add-header "Cc:\n"))
-            (save-excursion (message-add-header "Bcc:\n"))))
+            (save-excursion (message-add-header "Cc: \n"))
+            (save-excursion (message-add-header "Bcc: \n"))))
 
 ;; mu4e address completion
 (add-hook 'mu4e-compose-mode-hook 'company-mode)
@@ -365,10 +365,52 @@
 			      "Max\n")))))
     (message-insert-signature)))
 
+(autoload 'mail-hist-forward-header "mail-hist")
+(autoload 'mail-text-start          "sendmail")
+
+(defun my-message-signature-start ()
+  "Return value of point at start of message signature."
+  (save-mark-and-excursion
+    (message-goto-signature)
+    (point)))
+
+(defun my-message-field-forward ()
+  "Move point to next \"field\" in a `message-mode' buffer.
+With each invocation, point is moved to the next field of
+interest amongst header values, message body and message
+signature, in that order."
+  (interactive)
+  (cond ((message-point-in-header-p)
+         (unless (mail-hist-forward-header 1)
+           (call-interactively #'message-goto-body)))
+        ((>= (point) (my-message-signature-start))
+         (message "No further field"))
+        ((message-in-body-p)
+         (message-goto-signature))
+        (t ; Probably on `mail-header-separator' line
+         (call-interactively #'message-goto-body))))
+
+(defun my-message-field-backward ()
+  "Like `my-message-field-forward', but in opposite direction."
+  (interactive)
+  (cond ((or (message-point-in-header-p)
+             (<= (point) (mail-text-start)))
+         (unless (mail-hist-forward-header
+                  (if (message-point-in-header-p) -1 0))
+           (message "No further field")))
+        ((<= (point) (my-message-signature-start))
+         (call-interactively #'message-goto-body))
+        (t ; Beyond start of signature
+         (message-goto-signature))))
+
+
+
 
 (general-def
   :states 'normal
   :keymaps 'mu4e-compose-mode-map
+  "n" '(my-message-field-forward :which-key "Next Message Field")
+  "p" '(my-message-field-backward :which-key "Prev Message Fielt")
   "a" '(mail-attach-file :which-key "Attachment")
   "q" '(message-dont-send :which-key "Cancel Compose")
   "s" '(mabr/mu4e-choose-signature :which-key "Signature")
