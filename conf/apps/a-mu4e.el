@@ -12,7 +12,7 @@
   (setq mu4e-get-mail-command (concat (executable-find "mbsync") " -a"))
   ;; how often to call it in seconds:
   (setq mu4e-update-interval 300)
-;; save attachment to desktop by default
+  ;; save attachment to desktop by default
   ;; or another choice of yours:
   (setq mu4e-attachment-dir "~/Downloads")
   ;; Use Ivy for mu4e completions (maildir folders, etc)
@@ -23,12 +23,12 @@
 
   ;; list of your email adresses:
   (setq mu4e-user-mail-address-list '("mbrosius@icloud.com"
-                                    "brosiusmax@gmail.com"
-                                    "hello@maxbrosius.de"
-				    "mail@maxbrosius.de"
-				    "maximilian.brosius@uni-hamburg.de"
-				    "maximilian.brosius@studium.uni-hamburg.de"
-				    "6brosius@informatik.uni-hamburg.de"))
+                                      "brosiusmax@gmail.com"
+                                      "hello@maxbrosius.de"
+				      "mail@maxbrosius.de"
+				      "maximilian.brosius@uni-hamburg.de"
+				      "maximilian.brosius@studium.uni-hamburg.de"
+				      "6brosius@informatik.uni-hamburg.de"))
 
   ;; store link to message if in header view, not to header query:
   (setq org-mu4e-link-query-in-headers-mode nil)
@@ -53,16 +53,16 @@
   ;; for the generic imap account:
   ;; e.g `ls ~/.maildir/example'
   (setq   mu4e-maildir-shortcuts
-        '(("/icloud/INBOX" . ?i)
-          ("/icloud/Sent Messages" . ?I)
-          ("/gmail/INBOX" . ?g)
-          ("/gmail/[Gmail]/Gesendet" . ?G)
-	  ("/maxbrosius/INBOX" . ?p)
-	  ("/maxbrosius/Sent Items" . ?P)
-	  ("/hellomaxb/INBOX" . ?e)
-          ("/hellomaxb/Sent Items" . ?E)
-	  ("/uhhmail/INBOX" . ?c)
-	  ("/uhhmail/Gesendete Elemente" . ?y)))
+          '(("/icloud/INBOX" . ?i)
+            ("/icloud/Sent Messages" . ?I)
+            ("/gmail/INBOX" . ?g)
+            ("/gmail/[Gmail]/Gesendet" . ?G)
+	    ("/maxbrosius/INBOX" . ?p)
+	    ("/maxbrosius/Sent Items" . ?P)
+	    ("/hellomaxb/INBOX" . ?e)
+            ("/hellomaxb/Sent Items" . ?E)
+	    ("/uhhmail/INBOX" . ?c)
+	    ("/uhhmail/Gesendete Elemente" . ?y)))
 
   (setq mu4e-context-policy 'pick-first)
 
@@ -96,137 +96,137 @@
 
 
   (setq mu4e-contexts
-      `(,(make-mu4e-context
-          :name "maxbrosius"
-          :enter-func
-          (lambda () (mu4e-message "Entering mail@maxbrosius.de ..."))
-          :leave-func
-          (lambda () (mu4e-message "Leaveing mail@maxbrosius.de ..."))
-          :match-func
-          (lambda (msg)
-            (when msg
-              (mu4e-message-contact-field-matches msg
-                                                  :to "mail@maxbrosius.de")))
-          :vars '((user-mail-address . "mail@maxbrosius.de")
-                  (user-full-name . "Maximilian Brosius")
-                  ;; check your ~/.maildir to see how the subdirectories are called
-                  (mu4e-drafts-folder . "/maxbrosius/Drafts")
-                  (mu4e-refile-folder . "/maxbrosius/Archive")
-                  (mu4e-sent-folder . "/maxbrosius/Sent Items")
-                  (mu4e-trash-folder . "/maxbrosius/Trash")))
-	,(make-mu4e-context
-          :name "icloud"
-          :enter-func
-          (lambda () (mu4e-message "Entering mbrosius@icloud.com ..."))
-          :leave-func
-          (lambda () (mu4e-message "Leaveing mbrosius@icloud.com ..."))
-          :match-func
-          (lambda (msg)
-            (when msg
-              (mu4e-message-contact-field-matches msg
-                                                  :to "mbrosius@icloud.com")))
-          :vars '((user-mail-address . "mbrosius@icloud.com" )
-                  (user-full-name . "Maximilian Brosius")
-                  (mu4e-drafts-folder . "/icloud/Drafts")
-                  (mu4e-refile-folder . "/icloud/Archive")
-                  (mu4e-sent-folder . "/icloud/Sent Messages")
-                  (mu4e-trash-folder . "/icloud/Deleted Messages")))
+	`(,(make-mu4e-context
+            :name "maxbrosius"
+            :enter-func
+            (lambda () (mu4e-message "Entering mail@maxbrosius.de ..."))
+            :leave-func
+            (lambda () (mu4e-message "Leaveing mail@maxbrosius.de ..."))
+            :match-func
+            (lambda (msg)
+              (when msg
+		(mu4e-message-contact-field-matches msg
+                                                    :to "mail@maxbrosius.de")))
+            :vars '((user-mail-address . "mail@maxbrosius.de")
+                    (user-full-name . "Maximilian Brosius")
+                    ;; check your ~/.maildir to see how the subdirectories are called
+                    (mu4e-drafts-folder . "/maxbrosius/Drafts")
+                    (mu4e-refile-folder . "/maxbrosius/Archive")
+                    (mu4e-sent-folder . "/maxbrosius/Sent Items")
+                    (mu4e-trash-folder . "/maxbrosius/Trash")))
+	  ,(make-mu4e-context
+            :name "icloud"
+            :enter-func
+            (lambda () (mu4e-message "Entering mbrosius@icloud.com ..."))
+            :leave-func
+            (lambda () (mu4e-message "Leaveing mbrosius@icloud.com ..."))
+            :match-func
+            (lambda (msg)
+              (when msg
+		(mu4e-message-contact-field-matches msg
+                                                    :to "mbrosius@icloud.com")))
+            :vars '((user-mail-address . "mbrosius@icloud.com" )
+                    (user-full-name . "Maximilian Brosius")
+                    (mu4e-drafts-folder . "/icloud/Drafts")
+                    (mu4e-refile-folder . "/icloud/Archive")
+                    (mu4e-sent-folder . "/icloud/Sent Messages")
+                    (mu4e-trash-folder . "/icloud/Deleted Messages")))
 
-        ,(make-mu4e-context
-          :name "gmail"
-          :enter-func
-          (lambda () (mu4e-message "Entering brosiusmax@gmail.com ..."))
-          :leave-func
-          (lambda () (mu4e-message "Leaveing brosiusmax@gmail.com ..."))
-          :match-func
-          (lambda (msg)
-            (when msg
-              (mu4e-message-contact-field-matches msg
-                                                  :to "brosiusmax@gmail.com")))
-          :vars '((user-mail-address . "brosiusmax@gmail.com")
-                  (user-full-name . "Maximilian Brosius")
-                  (mu4e-drafts-folder . "/gmail/[GMAIL]/Entw&APw-rfe")
-                  (mu4e-refile-folder . "/gmail/[GMAIL]/Alle Nachrichten")
-                  (mu4e-sent-folder . "/gmail/[GMAIL]/Gesendet")
-                  (mu4e-trash-folder . "/gmail/[GMAIL]/Papierkorb")))
+          ,(make-mu4e-context
+            :name "gmail"
+            :enter-func
+            (lambda () (mu4e-message "Entering brosiusmax@gmail.com ..."))
+            :leave-func
+            (lambda () (mu4e-message "Leaveing brosiusmax@gmail.com ..."))
+            :match-func
+            (lambda (msg)
+              (when msg
+		(mu4e-message-contact-field-matches msg
+                                                    :to "brosiusmax@gmail.com")))
+            :vars '((user-mail-address . "brosiusmax@gmail.com")
+                    (user-full-name . "Maximilian Brosius")
+                    (mu4e-drafts-folder . "/gmail/[GMAIL]/Entw&APw-rfe")
+                    (mu4e-refile-folder . "/gmail/[GMAIL]/Alle Nachrichten")
+                    (mu4e-sent-folder . "/gmail/[GMAIL]/Gesendet")
+                    (mu4e-trash-folder . "/gmail/[GMAIL]/Papierkorb")))
 
-        ,(make-mu4e-context
-          :name "hellomaxb"
-          :enter-func
-          (lambda () (mu4e-message "Entering hello@maxbrosius.de ..."))
-          :leave-func
-          (lambda () (mu4e-message "Leaveing hello@maxbrosius.de ..."))
-          :match-func
-          (lambda (msg)
-            (when msg
-              (mu4e-message-contact-field-matches msg
-                                                  :to "hello@maxbrosius.de")))
-          :vars '((user-mail-address . "hello@maxbrosius.de")
-                  (user-full-name . "Maximilian Brosius")
-                  ;; check your ~/.maildir to see how the subdirectories are called
-                  (mu4e-drafts-folder . "/hellomaxb/Drafts")
-                  (mu4e-refile-folder . "/hellomaxb/Archive")
-                  (mu4e-sent-folder . "/hellomaxb/Sent Items")
-                  (mu4e-trash-folder . "/hellomaxb/Trash")))
+          ,(make-mu4e-context
+            :name "hellomaxb"
+            :enter-func
+            (lambda () (mu4e-message "Entering hello@maxbrosius.de ..."))
+            :leave-func
+            (lambda () (mu4e-message "Leaveing hello@maxbrosius.de ..."))
+            :match-func
+            (lambda (msg)
+              (when msg
+		(mu4e-message-contact-field-matches msg
+                                                    :to "hello@maxbrosius.de")))
+            :vars '((user-mail-address . "hello@maxbrosius.de")
+                    (user-full-name . "Maximilian Brosius")
+                    ;; check your ~/.maildir to see how the subdirectories are called
+                    (mu4e-drafts-folder . "/hellomaxb/Drafts")
+                    (mu4e-refile-folder . "/hellomaxb/Archive")
+                    (mu4e-sent-folder . "/hellomaxb/Sent Items")
+                    (mu4e-trash-folder . "/hellomaxb/Trash")))
 
 
-        ,(make-mu4e-context
-          :name "uhhmail"
-          :enter-func
-          (lambda () (mu4e-message "Entering maximilian.brosius@uni-hamburg.de ..."))
-          :leave-func
-          (lambda () (mu4e-message "Leaveing maximilian.brosius@uni-hamburg.de ..."))
-          :match-func
-          (lambda (msg)
-            (when msg
-              (mu4e-message-contact-field-matches msg
-                                                  :to "maximilian.brosius@uni-hamburg.de")))
-          :vars '((user-mail-address . "maximilian.brosius@uni-hamburg.de")
-                  (user-full-name . "Maximilian Brosius")
-                  ;; check your ~/.maildir to see how the subdirectories are called
-                  (mu4e-drafts-folder . "/uhhmail/Entw&APw-rfe")
-                  (mu4e-refile-folder . "/uhhmail/Archiv")
-                  (mu4e-sent-folder . "/uhhmail/Gesendete Elemente")
-                  (mu4e-trash-folder . "/uhhmail/Gel&APY-schte Elemente")))
+          ,(make-mu4e-context
+            :name "uhhmail"
+            :enter-func
+            (lambda () (mu4e-message "Entering maximilian.brosius@uni-hamburg.de ..."))
+            :leave-func
+            (lambda () (mu4e-message "Leaveing maximilian.brosius@uni-hamburg.de ..."))
+            :match-func
+            (lambda (msg)
+              (when msg
+		(mu4e-message-contact-field-matches msg
+                                                    :to "maximilian.brosius@uni-hamburg.de")))
+            :vars '((user-mail-address . "maximilian.brosius@uni-hamburg.de")
+                    (user-full-name . "Maximilian Brosius")
+                    ;; check your ~/.maildir to see how the subdirectories are called
+                    (mu4e-drafts-folder . "/uhhmail/Entw&APw-rfe")
+                    (mu4e-refile-folder . "/uhhmail/Archiv")
+                    (mu4e-sent-folder . "/uhhmail/Gesendete Elemente")
+                    (mu4e-trash-folder . "/uhhmail/Gel&APY-schte Elemente")))
 
-	,(make-mu4e-context 
-	  :name "fbi"
-	  :enter-func
-          (lambda () (mu4e-message "Entering fbi Mail..."))
-          :leave-func
-          (lambda () (mu4e-message "Leaveing fbi Mail ..."))
-	  :match-func
-	  (lambda (msg) 
-	    (when msg 
-	      (mu4e-message-contact-field-matches msg
-				      `(:to :cc :from) "6brosius@informatik.uni-hamburg.de"))) 
-	  :vars `((user-mail-address . "6brosius@informatik.uni-hamburg.de")
-		  (user-full-name . "Maximilian Brosius")
-                  ;; check your ~/.maildir to see how the subdirectories are called
-                  (mu4e-drafts-folder . "/uhhmail/Entw&APw-rfe")
-                  (mu4e-refile-folder . "/uhhmail/Archiv")
-                  (mu4e-sent-folder . "/uhhmail/Gesendete Elemente")
-                  (mu4e-trash-folder . "/uhhmail/Gel&APY-schte Elemente")))
-	,(make-mu4e-context 
-	  :name "studium"
-	  :enter-func
-          (lambda () (mu4e-message "Entering studium Mail..."))
-          :leave-func
-          (lambda () (mu4e-message "Leaveing studium Mail ..."))
-	  :match-func
-	  (lambda (msg) 
-	    (when msg 
-	      (mu4e-message-contact-field-matches msg
-				      `(:to :cc :from) "maximilian.brosius@studium.uni-hamburg.de"))) 
-	  :vars `((user-mail-address . "maximilian.brosius@studium.uni-hamburg.de")
-		  (user-full-name . "Maximilian Brosius")
-                  ;; check your ~/.maildir to see how the subdirectories are called
-                  (mu4e-drafts-folder . "/uhhmail/Entw&APw-rfe")
-                  (mu4e-refile-folder . "/uhhmail/Archiv")
-                  (mu4e-sent-folder . "/uhhmail/Gesendete Elemente")
-                  (mu4e-trash-folder . "/uhhmail/Gel&APY-schte Elemente"))) 
+	  ,(make-mu4e-context 
+	    :name "fbi"
+	    :enter-func
+            (lambda () (mu4e-message "Entering fbi Mail..."))
+            :leave-func
+            (lambda () (mu4e-message "Leaveing fbi Mail ..."))
+	    :match-func
+	    (lambda (msg) 
+	      (when msg 
+		(mu4e-message-contact-field-matches msg
+						    `(:to :cc :from) "6brosius@informatik.uni-hamburg.de"))) 
+	    :vars `((user-mail-address . "6brosius@informatik.uni-hamburg.de")
+		    (user-full-name . "Maximilian Brosius")
+                    ;; check your ~/.maildir to see how the subdirectories are called
+                    (mu4e-drafts-folder . "/uhhmail/Entw&APw-rfe")
+                    (mu4e-refile-folder . "/uhhmail/Archiv")
+                    (mu4e-sent-folder . "/uhhmail/Gesendete Elemente")
+                    (mu4e-trash-folder . "/uhhmail/Gel&APY-schte Elemente")))
+	  ,(make-mu4e-context 
+	    :name "studium"
+	    :enter-func
+            (lambda () (mu4e-message "Entering studium Mail..."))
+            :leave-func
+            (lambda () (mu4e-message "Leaveing studium Mail ..."))
+	    :match-func
+	    (lambda (msg) 
+	      (when msg 
+		(mu4e-message-contact-field-matches msg
+						    `(:to :cc :from) "maximilian.brosius@studium.uni-hamburg.de"))) 
+	    :vars `((user-mail-address . "maximilian.brosius@studium.uni-hamburg.de")
+		    (user-full-name . "Maximilian Brosius")
+                    ;; check your ~/.maildir to see how the subdirectories are called
+                    (mu4e-drafts-folder . "/uhhmail/Entw&APw-rfe")
+                    (mu4e-refile-folder . "/uhhmail/Archiv")
+                    (mu4e-sent-folder . "/uhhmail/Gesendete Elemente")
+                    (mu4e-trash-folder . "/uhhmail/Gel&APY-schte Elemente"))) 
 
-	))
+	  ))
 
 
   ;; (setq mu4e-context-policy 'pick-first) ;; start with the first (default) context;
@@ -243,6 +243,9 @@
   ;; spell checking
   (add-hook 'mu4e-compose-mode-hook 'flyspell-mode)
 
+  ;; Disable Line No for Headers View..
+  (add-hook 'mu4e-headers-mode-hook '(lambda () (display-line-numbers-mode -1)))
+  (add-hook 'mu4e-main-mode-hook '(lambda () (display-line-numbers-mode -1)))
   ;; gpg encryptiom & decryption:
   ;; this can be left alone
   (require 'epa-file)
@@ -266,28 +269,28 @@
   ;; the following is to show shortcuts in the main view.
   (add-to-list 'mu4e-bookmarks
 	       '(:name "Inbox - iCloud"
-	       :query "maildir:/icloud/INBOX"
-               :key ?a))
+		       :query "maildir:/icloud/INBOX"
+		       :key ?a))
   (add-to-list 'mu4e-bookmarks
-            '(:name "Inbox - Gmail"
-              :query "maildir:/gmail/INBOX"
-              :key ?g))
+               '(:name "Inbox - Gmail"
+		       :query "maildir:/gmail/INBOX"
+		       :key ?g))
   (add-to-list 'mu4e-bookmarks
-            '(:name "Inbox - Private"
-              :query "maildir:/maxbrosius/INBOX"
-              :key ?p))
+               '(:name "Inbox - Private"
+		       :query "maildir:/maxbrosius/INBOX"
+		       :key ?p))
   (add-to-list 'mu4e-bookmarks
-            '(:name "Inbox - hello maxb"
-              :query "maildir:/hellomaxb/INBOX"
-              :key ?e))
+               '(:name "Inbox - hello maxb"
+		       :query "maildir:/hellomaxb/INBOX"
+		       :key ?e))
   (add-to-list 'mu4e-bookmarks
-            '(:name "Inbox - UHHmail"
-              :query "maildir:/uhhmail/INBOX"
-              :key ?u))
+               '(:name "Inbox - UHHmail"
+		       :query "maildir:/uhhmail/INBOX"
+		       :key ?u))
   (add-to-list 'mu4e-bookmarks
-	     '(:name "All Inboxes"
-	     :query "maildir:/icloud/INBOX OR maildir:/gmail/INBOX OR maildir:/maxbrosius/INBOX OR maildir:/hellomaxb/INBOX OR maildir:/uhhmail/INBOX"
-	     :key ?I))
+	       '(:name "All Inboxes"
+		       :query "maildir:/icloud/INBOX OR maildir:/gmail/INBOX OR maildir:/maxbrosius/INBOX OR maildir:/hellomaxb/INBOX OR maildir:/uhhmail/INBOX"
+		       :key ?I))
 
   (setq mabr/mu4e-inbox-query
         "(maildir:/icloud/INBOX OR maildir:/gmail/INBOX OR maildir:/maxbrosius/INBOX OR maildir:/hellomaxb/INBOX OR maildir:/uhhmail/INBOX) AND flag:unread")
@@ -299,7 +302,7 @@
   ;; select the right sender email from the context.
   (setq message-sendmail-envelope-from 'header)
   (mu4e t)
-)
+  )
 
 ;; chose from account before sending
 ;; this is a custom function that works for me.
@@ -403,8 +406,12 @@ signature, in that order."
         (t ; Beyond start of signature
          (message-goto-signature))))
 
+;; (use-package mu4e-icalendar
+;;   :after mu4e
+;;   :init
+;;   (mu4e-icalendar-setup))
 
-
+(add-hook 'dired-mode-hook 'turn-on-gnus-dired-mode)
 
 (general-def
   :states 'normal
@@ -412,8 +419,12 @@ signature, in that order."
   "n" '(my-message-field-forward :which-key "Next Message Field")
   "p" '(my-message-field-backward :which-key "Prev Message Fielt")
   "a" '(mail-attach-file :which-key "Attachment")
-  "q" '(message-dont-send :which-key "Cancel Compose")
+  "q" '(message-kill-buffer :which-key "Kill Buffer")
+  "d" '(message-dont-send :which-key "Save Draft")
   "s" '(mabr/mu4e-choose-signature :which-key "Signature")
-  "b" '(message-goto-body :which-key "Jump to Body"))
+  "b" '(message-goto-body :which-key "Jump to Body")
+  "h" '(message-goto-to :which-key "Jump to Header")
+  "e" '(mml-secure-message-encrypt-pgp :which-key "Encrypt")
+  "S" '(mml-secure-message-sign-pgp :which-key "Sign"))
 
 (provide 'a-mu4e)

@@ -245,6 +245,7 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
 	org-gcal-client-secret "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"
 	org-gcal-file-alist '(("brosiusmax@gmail.com" .  "/Users/morpheus/org/Agenda/iCloud/gcal.org"))))
 
+(org-gcal-reload-client-id-secret)
 ;; KEYBINDINGS
 (general-def
   :states 'normal
