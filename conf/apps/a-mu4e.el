@@ -418,7 +418,7 @@ signature, in that order."
   :keymaps 'mu4e-compose-mode-map
   "n" '(my-message-field-forward :which-key "Next Message Field")
   "p" '(my-message-field-backward :which-key "Prev Message Fielt")
-  "a" '(mail-attach-file :which-key "Attachment")
+  "a" '(mml-insert-file :which-key "Attachment")
   "q" '(message-kill-buffer :which-key "Kill Buffer")
   "d" '(message-dont-send :which-key "Save Draft")
   "s" '(mabr/mu4e-choose-signature :which-key "Signature")
