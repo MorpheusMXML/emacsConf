@@ -413,6 +413,48 @@ signature, in that order."
 
 (add-hook 'dired-mode-hook 'turn-on-gnus-dired-mode)
 
+(defun mabr/mu4e-view-save-all-attachments (&optional arg)
+  "Save all attachments of a given message.
+
+If ARG is nil, all attachments will be saved in
+`mu4e-attachment-dir'. When non-nil, user will be prompted to
+choose a specific directory where to save all the files."
+  (interactive "P")
+  (when (and (eq major-mode 'mu4e-view-mode)
+             (derived-mode-p 'gnus-article-mode))
+    (let ((parts (mu4e~view-gather-mime-parts))
+          (handles '())
+          (files '())
+          (directory (if arg
+                         (read-directory-name "Save to directory: ")
+                       mu4e-attachment-dir)))
+      (dolist (part parts)
+        (let ((fname (or (cdr (assoc 'filename (assoc "attachment" (cdr part))))
+                         (cl-loop for item in part
+                                  for name = (and (listp item) (assoc-default 'name item))
+                                  thereis (and (stringp name) name)))))
+          (when fname
+            (push `(,fname . ,(cdr part)) handles)
+            (push fname files))))
+      (if files
+          (cl-loop for (f . h) in handles
+                   when (member f files)
+                   do (mm-save-part-to-file
+                       h (let ((file (expand-file-name f directory)))
+                           (if (file-exists-p file)
+                               (let (newname (count 1))
+                                 (while (and
+                                         (setq newname
+                                               (format "%s-%s%s"
+                                                       (file-name-sans-extension file)
+                                                       count
+                                                       (file-name-extension file t)))
+                                         (file-exists-p newname))
+                                   (cl-incf count))
+                                 newname)
+                             file))))
+        (mu4e-message "No attached files found")))))
+
 (general-def
   :states 'normal
   :keymaps 'mu4e-compose-mode-map
@@ -426,5 +468,12 @@ signature, in that order."
   "h" '(message-goto-to :which-key "Jump to Header")
   "e" '(mml-secure-message-encrypt-pgp :which-key "Encrypt")
   "S" '(mml-secure-message-sign-pgp :which-key "Sign"))
+
+(general-def
+  :states '(normal visual)
+  :keymaps 'mu4e-view-mode-map
+  "<" '(:ignore t :which-key "Save Attachment")
+  "< a" '(mabr/mu4e-view-save-all-attachments :which-key "Save All Att.")
+  "< s" '(mu4e-view-save-attachments :which-key "Save single Att."))
 
 (provide 'a-mu4e)
