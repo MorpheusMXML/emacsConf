@@ -60,6 +60,8 @@
         ("bpmn" ("camunda-modeler"))
         ("xopp" ("xournalpp"))))
 
+(dired-launch-enable)
+
 (general-def
   :states 'normal
   :keymaps 'dired-mode-map
