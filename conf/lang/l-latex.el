@@ -1,5 +1,5 @@
 (message "Loading LaTeX Settings...")
-(setq debug-on-error t)
+
 (use-package tex
   :straight auctex
   :ensure t)

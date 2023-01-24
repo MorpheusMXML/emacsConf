@@ -39,9 +39,6 @@
     (interactive)
     (evil-set-jump)
     (tide-jump-to-definition))
-
-  (company-mode 1)
-  (flycheck-mode 1)
   (setq-local company-tooltip-align-annotations t))
 
 (add-hook 'tide-mode-hook 'fp/tide-mode-hook)

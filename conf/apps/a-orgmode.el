@@ -38,17 +38,17 @@
   (evil-org-set-key-theme '(navigation todo insert textobjects additional calendar)))
 
 
-  ;; Set faces for heading levels
-  ;; (dolist (face '((org-level-1 . 1.2)
-  ;;                 (org-level-2 . 1.1)
-  ;;                 (org-level-3 . 1.05)
-  ;;                 (org-level-4 . 1.0)
-  ;;                 (org-level-5 . 1.1)
-  ;;                 (org-level-6 . 1.1)
-  ;;                 (org-level-7 . 1.1)
-  ;;                 (org-level-8 . 1.1)))
+;; Set faces for heading levels
+;; (dolist (face '((org-level-1 . 1.2)
+;;                 (org-level-2 . 1.1)
+;;                 (org-level-3 . 1.05)
+;;                 (org-level-4 . 1.0)
+;;                 (org-level-5 . 1.1)
+;;                 (org-level-6 . 1.1)
+;;                 (org-level-7 . 1.1)
+;;                 (org-level-8 . 1.1)))
 ;;     (set-face-attribute (car face) nil :font "Fira Code Retina" :weight 'regular :height (cdr face)))
- 
+
 
 (defun mabr/org-mode-visual-fill ()
   (setq visual-fill-column-width 100
@@ -121,7 +121,7 @@
       `(("a" "Appointment" 
          entry (file ,"~/org/Agenda/iCloud/gcal.org")
          "* %?\n:PROPERTIES:\n:calendar-id:\tbrosiusmax@gmail.com\n:END:\n:org-gcal:\n%^T--%^T\n:END:\n\n" :jump-to-captured t)
-	      ("i" "Idea"
+	("i" "Idea"
          entry (file+headline ,(concat org-directory "/20220202-000000 prv.org") "Ideas")
          "* IDEA %?\n %T\n")
         ("n" "Note"
@@ -130,7 +130,7 @@
         ("r" "Read later"
          entry (file+headline ,(concat org-directory "/20220202-000000 prv.org") "Read later")
          "* READ %?\n %T\n")
-	      ("t" "Capture TODO")
+	("t" "Capture TODO")
         ("tp" "Private Task" entry (file+olp "~/org/Agenda/private.org" "Inbox")
          "** TODO %?\n %U\n %a\n %i" :empty-lines 1)
         ("tw" "Work Task" entry (file+olp "~/org/Agenda/Glou.org" "Inbox")
@@ -208,7 +208,7 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
         ;; (plantuml . t)
         ;; (matlab . t)
         (go . t)))
-      ;; org-babel-octave-shell-command "octave -q")
+;; org-babel-octave-shell-command "octave -q")
 
 (org-babel-do-load-languages 'org-babel-load-languages org-babel-load-languages)
 
@@ -263,39 +263,45 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
   :states '(normal visual)
   :keymaps 'org-mode-map
   "'" 'org-edit-src-code
+  "SPC =" '(mabr/format-buffer :which-key "format Buffer")
   "SPC h" 'org-insert-heading
   "SPC p" 'fill-paragraph
+  "SPC o" 'org-open-at-point
+  "SPC e" '(org-export-dispatch :which-key "Export")
+
   "SPC i" '(:ignore t :which-key "Insert")
   "SPC i s" 'org-download-screenshot
-  "SPC i t" 'org-todo
+  "SPC i t" 'org-insert-todo-heading
   "SPC i l" 'org-insert-link
+  
   "SPC s l" 'org-store-link
+
   "SPC t" '(:ignore t :which-key "Toggle")
   "SPC t i" 'org-toggle-inline-images
-
   "SPC t l" 'org-latex-preview
+
   "SPC c" '(:ignore t :which-key "Clock, Execute")
   "SPC c i" 'org-clock-in
   "SPC c o" 'org-clock-out
   "SPC c l" 'org-clock-in-last
   "SPC c c" 'org-babel-execute-src-block
+
   "SPC r" '(:ignore t :which-key "Remove")
   "SPC r r" 'org-babel-remove-result
-  "SPC r a" (lambda () (interactive) (org-babel-remove-result-one-or-many t))
-  "SPC o" 'org-open-at-point
-  "SPC e" 'org-export-dispatch)
+  "SPC r a" (lambda () (interactive) (org-babel-remove-result-one-or-many t)))
 
-(general-def
-  :states '(normal visual insert)
-  :keymaps 'org-mode-map
-  "C-k" 'org-previous-visible-heading
-  "C-j" 'org-next-visible-heading)
 
-(general-def
-  :states '(normal visual insert)
-  :keymaps 'org-agenda-mode-map
-  "C-j" 'air-org-agenda-next-header
-  "C-k" 'air-org-agenda-previous-header
-  "C-t" 'org-agenda-todo)
+  (general-def
+    :states '(normal visual insert)
+    :keymaps 'org-mode-map
+    "C-k" 'org-previous-visible-heading
+    "C-j" 'org-next-visible-heading)
 
-(provide 'a-orgmode)
+  (general-def
+    :states '(normal visual insert)
+    :keymaps 'org-agenda-mode-map
+    "C-j" 'air-org-agenda-next-header
+    "C-k" 'air-org-agenda-previous-header
+    "C-t" 'org-agenda-todo)
+
+  (provide 'a-orgmode)

@@ -273,4 +273,35 @@
 (use-package aggressive-indent)
 (add-hook 'prog-mode-hook #'aggressive-indent-mode)
 
+(mabr-leader
+  :states '(normal visual)
+  :keymaps 'magit-mode-map
+  "SPC p" '(:ignore t :which-key "Forge Pull")
+  "SPC p p" '(forge-pull :which-key "Pull")
+  "SPC p n" '(forge-pull-notifications :which-key "Pull Notifications")
+  "SPC s" '(forge-post-submit :which-key "Submit Post")
+  "SPC x" '(forge-post-cancel :which-key "Cancel Post")
+
+  "SPC c" '(:ignore t :which-key "Create...")
+  "SPC c i" '(forge-create-issue :which-key "Create Issue")
+  "SPC c r" '(forge-create-pullreq-from-issue :which-key "Create PullReq")
+  "SPC c c" '(forge-create-post :which-key "Create Comment")
+
+  "SPC e" '(:ignore t :which-key "Edit...")
+  "SPC e p" '(forge-edit-post :which-key "Edit Post")
+  "SPC e t" '(forge-edit-topic-title :which-key "Edit Title")
+  "SPC e l" '(forge-edit-topic-labels :which-key "Edit Labels")
+  "SPC e s" '(forge-edit-topic-state :which-key "Edit State")
+  "SPC e a" '(forge-edit-topic-assignees :which-key "Edit Assignees")
+  "SPC e n" '(forge-edit-topic-note :which-key "Edit Note")
+  "SPC e d" '(forge-delete-comment :which-key "Delete Comment")
+  )
+
+(mabr-leader
+  :states '(normal visual)
+  :keymaps 'forge-post-mode-map
+  "SPC s" '(forge-post-submit :which-key "Submit Post")
+  "SPC x" '(forge-post-cancel :which-key "Cancel Post")
+  )
+
 (provide 'programming)

@@ -14,7 +14,7 @@
 (general-create-definer mabr-leader
   :prefix "<SPC>"
   :non-normal-prefix "C-SPC")
-
+;; (general-auto-unbind-keys)
 ;; -----------------------------------------------------------------------------------------------------------
 ;; UNDO
 (use-package undo-fu)

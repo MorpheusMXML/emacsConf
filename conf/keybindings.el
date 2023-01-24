@@ -160,9 +160,10 @@
   "? m" 'describe-mode
   "? k" 'describe-key
   "? F" 'describe-face
+  "? w" 'dictcc-at-point 
   )
 
-(use-package hydra)
+  (use-package hydra)
 (defhydra hydra-text-scale (:timeout 4)
   "scale Text"
   ("j" text-scale-increase "in")
