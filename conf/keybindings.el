@@ -1,7 +1,10 @@
 ;; (defvar mabr/git "~/git")
 (defvar mabr/emacsconf "~/.emacs.d/conf")
-;; (defvar mabr/dotfiles "~/")
+(defvar mabr/dotfiles "~/")
 (defvar mabr/orgfiles  "~/org")
+(defvar mabr/masterthesis "~/Documents/Dev/Master/Thesis")
+(defvar mabr/masterpaper "~/Documents/Dev/Master/Paper")
+(defvar mabr/masterunity "~/Documents/Dev/Master/ProspectRefuge")
 
 
 ;; Make ESC quit prompts
@@ -113,7 +116,12 @@
   "e" '(:ignore t :which-key "Edit")
   "e c" '((lambda() (interactive) (dired mabr/emacsconf)) :which-key "edit emacs config")
   "e o" '((lambda() (interactive) (dired mabr/orgfiles)) :which-key "edit org files")
-
+  "e d" '((lambda() (interactive) (dired mabr/dotfiles)) :which-key "edit dotFiles")
+  "e m" '(:ignore t :which-key "edit Master Thesis")
+  "e m t"'((lambda() (interactive) (dired mabr/masterthesis)) :which-key "edit Thesis")
+  "e m p"'((lambda() (interactive) (dired mabr/masterpaper)) :which-key "edit Paper")
+  "e m u"'((lambda() (interactive) (dired mabr/masterunity)) :which-key "edit Unity Proj.")
+  
   "m" '(:ignore t :which-key "Mail")
   "m m" 'mu4e
   "m c" 'mu4e-compose-new
