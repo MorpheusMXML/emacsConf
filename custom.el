@@ -4,7 +4,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
-   '("7ff5405fb4e9b98cb38c42e144088f581838e2ff346f5033bb1165b4e31e2399" default))
+   '("0d54c78d969fc00808de394689356fc91356fe3896bc20227f9572a2ad63c8eb" "7ff5405fb4e9b98cb38c42e144088f581838e2ff346f5033bb1165b4e31e2399" default))
  '(safe-local-variable-values '((TeX-master . "thesis") (TeX-master . t)))
  '(warning-suppress-log-types '((emacs))))
 (custom-set-faces

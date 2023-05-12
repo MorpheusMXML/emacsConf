@@ -3,9 +3,9 @@
 (use-package mu4e
   :config
   ;; Load org-mode integration
-  (require 'org-mu4e)
+  ;; (require 'org-mu4e)
   ;; we installed this with homebrew
-  (setq mu4e-mu-binary (executable-find "mu"))
+  (setq mu4e-mu-binary "/opt/homebrew/bin/mu")
   ;; this is the directory we created before:
   (setq mu4e-maildir "~/.maildir")
   ;; this command is called to sync imap servers:

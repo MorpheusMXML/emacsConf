@@ -55,6 +55,8 @@
 	   (doom-modeline-enable-word-count t))) 
 (display-time)
 
+
+
 ;; (use-package doom-themes
 ;;   :init (load-theme 'doom-dark+ t))
 
@@ -83,9 +85,10 @@
       (message "Loaded dark theme")
       (setq mabr/current-theme mabr/dark-theme))))
 
-(mac-auto-operator-composition-mode)
+;; (mac-auto-operator-composition-mode)
 
 (use-package dashboard
+  :straight t
   :ensure t
   :config
   (dashboard-setup-startup-hook)
@@ -159,20 +162,22 @@
   :after (treemacs magit)
   :ensure t)
 
-(use-package beacon
-  :ensure t
-  :config
-  (beacon-mode 1))
-
-;; (use-package pulsar
-;;   :init
-;;   (setq pulsar-pulse t)
-;;   (setq pulsar-delay 0.055)
-;;   (setq pulsar-iterations 10)
-;;   (setq pulsar-face 'pulsar-magenta)
-;;   (setq pulsar-highlight-face 'pulsar-yellow)
+;; (use-package beacon
+;;   :ensure t
 ;;   :config
-;;   (pulsar-global-mode 1))
+;;   (beacon-mode 1)
+;;   (setq beacon-blink-delay 2.0)
+;;   (setq beacon-blink-duration 1.6))
+
+(use-package pulsar
+  :init
+  (setq pulsar-pulse t)
+  (setq pulsar-delay 0.055)
+  (setq pulsar-iterations 10)
+  (setq pulsar-face 'pulsar-magenta)
+  (setq pulsar-highlight-face 'pulsar-yellow)
+  :config
+  (pulsar-global-mode 1))
 
 (use-package emojify
   :hook (after-init . global-emojify-mode))

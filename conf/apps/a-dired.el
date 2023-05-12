@@ -1,6 +1,9 @@
 ;; DIRED: Filebrowser
 (use-package dired-narrow)
 
+(when (eq system-type 'darwin)
+  (setq insert-directory-program "/opt/homebrew/bin/gls"))
+
 (setq dired-listing-switches "-lFahvgG --group-directories-first"
       dired-dwim-target t
       dired-ls-F-marks-symlinks t)

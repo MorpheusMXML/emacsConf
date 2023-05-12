@@ -2,12 +2,16 @@
 ;; ORG-MODE:
 ;;Import ORG Mode as one of the First Pkgs in order to prevent other dependencies pulling outdated versions.
 (use-package org)
-;; (use-package exec-path-from-shell)
+(use-package exec-path-from-shell
+  :straight t)
 ;; (exec-path-from-shell-copy-env "PYTHONPATH")
-;; (dolist (var '("SSH_AUTH_SOCK" "SSH_AGENT_PID" "GPG_AGENT_INFO" "LANG" ))
-;;   (add-to-list 'exec-path-from-shell-variables var))
-;; (when (memq window-system '(mac ns x))
-;;   (exec-path-from-shell-initialize))
+(dolist (var '("SSH_AUTH_SOCK" "SSH_AGENT_PID" "GPG_TTY" "GPG_AGENT_INFO" "LANG" ))
+  (add-to-list 'exec-path-from-shell-variables var))
+(when (memq window-system '(mac ns x))
+  (exec-path-from-shell-initialize))
+
+(setq epa-pinentry-mode 'loopback)
+;; (pinentry-start)
 ;; -----------------------------------------------------------------------------------------------------------
 ;;GENERAL: Keybindings
 (use-package general)
@@ -80,9 +84,7 @@
      (define-key flyspell-mouse-map [down-mouse-3] #'flyspell-correct-word)
      (define-key flyspell-mouse-map [mouse-3] #'undefined)))
 ;; Set $DICPATH to "$HOME/Library/Spelling" for hunspell.
-(setenv
-  "DICPATH"
-  (concat (getenv "HOME") "/Library/Spelling"))
+(setenv "DICPATH" "/Users/morpheus/Library/Spelling")
 ;; Tell ispell-mode to use hunspell.
 ;; (setq
 ;;   ispell-program-name
