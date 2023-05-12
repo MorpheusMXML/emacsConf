@@ -124,7 +124,7 @@
 (put 'downcase-region 'disabled nil)
 (put 'upcase-region 'disabled nil)
 (setq initial-scratch-message "")
-
+(setq visible-bell nil)
 (setq epa-pinentry-mode 'loopback)
 (setq insert-directory-program "gls" dired-use-ls-dired t)
 (setq mac-pass-command-to-system nil)

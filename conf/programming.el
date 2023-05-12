@@ -222,6 +222,9 @@
 
 (use-package forge
   :after magit
+  :init
+  (setq forge-add-default-sections nil)
+  (setq forge-add-default-bindings nil)
   :config
   (setq auth-sources '("~/.authinfo.gpg"))
   (add-to-list 'forge-alist '("git.informatik.uni-hamburg.de" "git.informatik.uni-hamburg.de/api/v4" "git.informatik.uni-hamburg.de" forge-gitlab-repository))

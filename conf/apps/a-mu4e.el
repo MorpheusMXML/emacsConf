@@ -244,8 +244,8 @@
   (add-hook 'mu4e-compose-mode-hook 'flyspell-mode)
 
   ;; Disable Line No for Headers View..
-  (add-hook 'mu4e-headers-mode-hook '(lambda () (display-line-numbers-mode -1)))
-  (add-hook 'mu4e-main-mode-hook '(lambda () (display-line-numbers-mode -1)))
+  (add-hook 'mu4e-headers-mode-hook #'(lambda () (display-line-numbers-mode -1)))
+  (add-hook 'mu4e-main-mode-hook #'(lambda () (display-line-numbers-mode -1)))
   ;; gpg encryptiom & decryption:
   ;; this can be left alone
   (require 'epa-file)
@@ -422,7 +422,7 @@ choose a specific directory where to save all the files."
   (interactive "P")
   (when (and (eq major-mode 'mu4e-view-mode)
              (derived-mode-p 'gnus-article-mode))
-    (let ((parts (mu4e~view-gather-mime-parts))
+    (let ((parts (mu4e--view-gather-mime-parts))
           (handles '())
           (files '())
           (directory (if arg
