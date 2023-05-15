@@ -458,22 +458,24 @@ choose a specific directory where to save all the files."
 (general-def
   :states 'normal
   :keymaps 'mu4e-compose-mode-map
-  "n" '(my-message-field-forward :which-key "Next Message Field")
-  "p" '(my-message-field-backward :which-key "Prev Message Fielt")
-  "a" '(mml-insert-file :which-key "Attachment")
+  "C-n" '(my-message-field-forward :which-key "Next Message Field")
+  "C-p" '(my-message-field-backward :which-key "Prev Message Fielt")
+  ;; "a" '(mml-attach-file :which-key "Attachment")
   "q" '(message-kill-buffer :which-key "Kill Buffer")
   "d" '(message-dont-send :which-key "Save Draft")
   "s" '(mabr/mu4e-choose-signature :which-key "Signature")
   "b" '(message-goto-body :which-key "Jump to Body")
   "h" '(message-goto-to :which-key "Jump to Header")
-  "e" '(mml-secure-message-encrypt-pgp :which-key "Encrypt")
-  "S" '(mml-secure-message-sign-pgp :which-key "Sign"))
+  "e" '(mml-secure-message-encrypt-pgpmime :which-key "Encrypt")
+  "S" '(mml-secure-message-sign-pgpmime :which-key "Sign"))
 
 (general-def
   :states '(normal visual)
   :keymaps 'mu4e-view-mode-map
-  "<" '(:ignore t :which-key "Save Attachment")
-  "< a" '(mabr/mu4e-view-save-all-attachments :which-key "Save All Att.")
-  "< s" '(mu4e-view-save-attachments :which-key "Save single Att."))
+  "f" '(:ignore t :which-key "Mail Files")
+  "f a" '('(mml-attach-file) :which-key "Attach File(s)")
+  "f s" '(:ignore t :which-key "Save single Att.")
+  "f s s" '(mu4e-view-save-attachments :which-key "Save Single Attachment")
+  "f s a" '(mabr/mu4e-view-save-all-attachments :which-key "Save All Attachments"))
 
 (provide 'a-mu4e)
