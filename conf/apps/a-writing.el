@@ -2,8 +2,6 @@
 
 (use-package powerthesaurus)
 
-(setq auth-sources
-      '((:source "~/.emacs.d/auth/.authinfo.gpg")))
 
 ;; (setq auth-source-debug t)
 

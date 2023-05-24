@@ -54,7 +54,8 @@
   :custom ((doom-modeline-height 15)
 	   (doom-modeline-enable-word-count t))) 
 (display-time)
-
+(setq display-time-format "%e.%m|%k:%M")
+(setq display-time-interval 1)
 
 
 ;; (use-package doom-themes
