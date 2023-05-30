@@ -1,10 +1,10 @@
-;;---------------------------------------------------------------------------------------------------- 
+;;----------------------------------------------------------------------------------------------------
 ;; company: autocompletion
 (use-package company)
 
 (setq company-idle-delay 0.0
       company-tooltip-limit 15
-      company-minimum-prefix-length 1 
+      company-minimum-prefix-length 1
       company-echo-delay 0
       company-auto-complete nil
       company-show-numbers 0)
@@ -279,13 +279,19 @@
 (use-package aggressive-indent)
 (add-hook 'prog-mode-hook #'aggressive-indent-mode)
 
+(use-package format-all)
+(add-hook 'prog-mode-hook #'format-all-mode)
+(add-hook 'format-all-mode-hook 'format-all-ensure-formatter)
+
 (mabr-leader
   :states '(normal visual)
   :keymaps 'magit-mode-map
   "SPC p" '(:ignore t :which-key "Forge Pull")
   "SPC p p" '(forge-pull :which-key "Pull")
   "SPC p n" '(forge-pull-notifications :which-key "Pull Notifications")
+
   "SPC s" '(forge-post-submit :which-key "Submit Post")
+
   "SPC x" '(forge-post-cancel :which-key "Cancel Post")
 
   "SPC c" '(:ignore t :which-key "Create...")
@@ -306,7 +312,7 @@
 (mabr-leader
   :states '(normal visual)
   :keymaps 'forge-post-mode-map
-  "SPC s" '(forge-post-submit :which-key "Submit Post")
+  ;; "SPC s" '(forge-post-submit :which-key "Submit Post")
   "SPC x" '(forge-post-cancel :which-key "Cancel Post")
   )
 
