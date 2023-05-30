@@ -217,6 +217,8 @@
 ;; (use-package caddyfile-mode)
 ;; (push '("\\(Caddyfile\\|caddy.conf\\)\\'" . caddyfile-mode) auto-mode-alist)
 
+(use-package sqlite3)
+
 ;; ;;----------------------------------------------------------------------------------------------------
 ;; MAGIT - Mighty Git Interface
 (use-package magit)
