@@ -224,7 +224,7 @@
 (use-package magit)
 
 (setq auth-sources '("~/.auth/.authinfo.gpg"))
-
+(setenv "GPG_AGENT_INFO" nil)
 (use-package forge
   :after magit
   :init

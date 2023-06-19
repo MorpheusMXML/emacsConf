@@ -65,7 +65,7 @@
 ;; Clean things up
 (eval-after-load 'latex
   '(setq LaTeX-clean-intermediate-suffixes
-     (append LaTeX-clean-intermediate-suffixes (list "\\.fdb_latexmk" "\\.rel" "\\.tex~"))))
+	 (append LaTeX-clean-intermediate-suffixes (list "\\.fdb_latexmk" "\\.rel" "\\.tex~"))))
 
 
 (add-hook 'TeX-mode-hook 'flyspell-mode)
@@ -92,7 +92,7 @@
       ;; TeX-view-program-list '(("PDF Tools" TeX-pdf-tools-sync-view))
       ;; use Skim as default pdf viewer
       ;; Skim's displayline is used for forward search (from .tex to .pdf)
-      ;; option -b highlights the current line; option -g opens Skim in the background  
+      ;; option -b highlights the current line; option -g opens Skim in the background
       ;; TeX-view-program-list
       ;; '(("PDF Viewer" "/Applications/Skim.app/Contents/SharedSupport/displayline -b %n %o %b"))
 

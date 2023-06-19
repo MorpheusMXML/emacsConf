@@ -118,7 +118,7 @@
       ;; ORG CAPTURE
       org-directory "~/mvtn/private/stc"
       org-capture-templates
-      `(("a" "Appointment" 
+      `(("a" "Appointment"
          entry (file ,"~/org/Agenda/iCloud/gcal.org")
          "* %?\n:PROPERTIES:\n:calendar-id:\tbrosiusmax@gmail.com\n:END:\n:org-gcal:\n%^T--%^T\n:END:\n\n" :jump-to-captured t)
 	("i" "Idea"
@@ -242,7 +242,7 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
   :ensure t
   :config
   (setq org-gcal-client-id "1006499711907-l4h30jr70qqdbrrc7ss3rphsfuld1jmd.apps.googleusercontent.com"
-	org-gcal-client-secret "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"
+	org-gcal-client-secret (auth-source-pick-first-password :host "calendar.google.com")
 	org-gcal-file-alist '(("brosiusmax@gmail.com" .  "/Users/morpheus/org/Agenda/iCloud/gcal.org"))))
 
 (org-gcal-reload-client-id-secret)
@@ -273,7 +273,7 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
   "SPC i s" 'org-download-screenshot
   "SPC i t" 'org-insert-todo-heading
   "SPC i l" 'org-insert-link
-  
+
   "SPC s l" 'org-store-link
 
   "SPC t" '(:ignore t :which-key "Toggle")
@@ -291,17 +291,17 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
   "SPC r a" (lambda () (interactive) (org-babel-remove-result-one-or-many t)))
 
 
-  (general-def
-    :states '(normal visual insert)
-    :keymaps 'org-mode-map
-    "C-k" 'org-previous-visible-heading
-    "C-j" 'org-next-visible-heading)
+(general-def
+  :states '(normal visual insert)
+  :keymaps 'org-mode-map
+  "C-k" 'org-previous-visible-heading
+  "C-j" 'org-next-visible-heading)
 
-  (general-def
-    :states '(normal visual insert)
-    :keymaps 'org-agenda-mode-map
-    "C-j" 'air-org-agenda-next-header
-    "C-k" 'air-org-agenda-previous-header
-    "C-t" 'org-agenda-todo)
+(general-def
+  :states '(normal visual insert)
+  :keymaps 'org-agenda-mode-map
+  "C-j" 'air-org-agenda-next-header
+  "C-k" 'air-org-agenda-previous-header
+  "C-t" 'org-agenda-todo)
 
-  (provide 'a-orgmode)
+(provide 'a-orgmode)
