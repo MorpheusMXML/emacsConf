@@ -129,7 +129,7 @@
 (mabr-leader
   :states 'normal
   :keymaps 'LaTeX-mode-map
-  "SPC c" '((lambda () (interactive) (save-buffer) (TeX-command "LatexMk" 'TeX-master-file)) :which-key "Compile")
+  "c c" '((lambda () (interactive) (save-buffer) (TeX-command "LatexMk" 'TeX-master-file)) :which-key "Compile LaTeX")
   "SPC b" '((lambda () (interactive) (save-buffer) (TeX-command "Biber" 'TeX-master-file)) :which-key "Biber")
   "SPC v" '(TeX-view :which-key "View PDF")
   "SPC p" 'fill-paragraph
