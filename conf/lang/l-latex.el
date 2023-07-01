@@ -34,6 +34,8 @@
 (setq reftex-cite-format 'natbib
       reftex-sort-bibtex-matches 'reverse-year)
 
+(setq reftex-default-bibliography '("~/Documents/Dev/Master/Thesis/thesis/references.bib"))
+
 ;; for parentheses
 (setq LaTeX-electric-left-right-brace 1)
 ;; For emacs to know where is pdflatex
@@ -48,6 +50,8 @@
 ;;     '("latexmk" "latexmk -pvc -pdf %s" TeX-run-TeX nil t
 ;;       :help "Run latexmk on file")
 ;;     TeX-command-list)))
+
+(setq undo-outer-limit 100000000)
 
 (use-package auctex-latexmk
   :ensure t

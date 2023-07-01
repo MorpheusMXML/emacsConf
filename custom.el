@@ -7,7 +7,15 @@
    '("0d54c78d969fc00808de394689356fc91356fe3896bc20227f9572a2ad63c8eb" "7ff5405fb4e9b98cb38c42e144088f581838e2ff346f5033bb1165b4e31e2399" default))
  '(mml-secure-openpgp-sign-with-sender t)
  '(safe-local-variable-values '((TeX-master . "thesis") (TeX-master . t)))
- '(warning-suppress-log-types '((emacs))))
+ '(warning-suppress-log-types
+   '(((undo discard-info))
+     ((undo discard-info))
+     ((undo discard-info))
+     ((undo discard-info))))
+ '(warning-suppress-types
+   '(((undo discard-info))
+     ((undo discard-info))
+     ((undo discard-info)))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

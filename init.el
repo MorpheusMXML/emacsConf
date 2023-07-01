@@ -56,16 +56,16 @@
 (message "Done loading: variables.el")
 
 ;; start emacs-server if not running
-    (add-hook 'after-init-hook
-        (lambda ()
-          (require 'server)
-          (unless (server-running-p)
-            (server-start))))
+(add-hook 'after-init-hook
+          (lambda ()
+            (require 'server)
+            (unless (server-running-p)
+              (server-start))))
 
 (set-terminal-coding-system 'utf-8)
 (set-keyboard-coding-system 'utf-8)
 (prefer-coding-system 'utf-8)
-
+(setq large-file-warning-threshold 50000000)
 ;; Code to replace exec-path-from-shell
 ;; Need to create file in $HOME/.emacs.d/.local/env
 ;; use this command to create the file  `printenv > $HOME/.emacs.d/.local/env'

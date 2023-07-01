@@ -11,13 +11,13 @@
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
 
 ;; all rights belong to my beloved friend mabr <3 du würschtal
-;(defun mabr/keymap-company ()
-;  (interactive)
-;  (general-def
-;	  :keymaps 'company-active-map
-;	  "<tab>" 'company-complete-selection
-;    "<return>" nil
-;    "ret" nil))
+					;(defun mabr/keymap-company ()
+					;  (interactive)
+					;  (general-def
+					;	  :keymaps 'company-active-map
+					;	  "<tab>" 'company-complete-selection
+					;    "<return>" nil
+					;    "ret" nil))
 
 ;; EMACS-WIDE BINDINGS
 (mabr-leader
@@ -27,7 +27,7 @@
   "SPC" '(:ignore t :which-key "Minormode Binds")
   "SPC p" 'fill-paragraph
   "SPC SPC" 'counsel-M-x
-  
+
   "a" 'ace-select-window
   ;; "d" 'dired
   ;; "D" 'dired-other-window
@@ -39,7 +39,7 @@
   "y" 'counsel-yank-pop
   "h" 'mabr/new-dashboard
   "r" 'ranger
-  
+
   "8" 'insert-char
 
   "/" 'swiper
@@ -58,7 +58,7 @@
   "f C"   '(copy-file :which-key "Copy file")
   "f D"   '(delete-file :which-key "Delete file")
   "f R"   '(rename-file :which-key "Rename file")
-  
+
   ;; window stuff
   "w" '(:ignore t :which-key "Window")
   "w w" 'other-window
@@ -77,7 +77,7 @@
   "w s d" 'split-window-right
   "w s f" 'make-frame-on-monitor
 
-  
+
   ;; Dired stuff
   "d" '(:ignore t :which-key "Dired")
   "d d" 'dired
@@ -121,16 +121,20 @@
   "e m t"'((lambda() (interactive) (dired mabr/masterthesis)) :which-key "edit Thesis")
   "e m p"'((lambda() (interactive) (dired mabr/masterpaper)) :which-key "edit Paper")
   "e m u"'((lambda() (interactive) (dired mabr/masterunity)) :which-key "edit Unity Proj.")
-  
+
   "m" '(:ignore t :which-key "Mail")
   "m m" 'mu4e
   "m c" 'mu4e-compose-new
-  "m i" 'mabr/go-to-inbox 
+  "m i" 'mabr/go-to-inbox
   "m u" 'mu4e-update-mail-and-index
 
   "q" '(:ignore t :which-key "Quality :)")
   "q t" 'mabr/cycle-themes
   "q s" '(hydra-text-scale/body :which-key "Scale Text")
+
+  "l" '(:ignore t :which-key "Links")
+  "l o" 'link-hint-open-link
+  "l c" 'link-hint-copy-link
 
   "t" '(:ignore t :which-key "Tools")
   "t a" 'org-agenda
@@ -149,7 +153,7 @@
   "t v" 'mabr/new-vterm
   "t u" 'vundo
   "t c" 'org-capture
-  "t i" '(counsel-imenu :which-key "iMenu") 
+  "t i" '(counsel-imenu :which-key "iMenu")
 
   "i" '(:ignore t :which-key "Insert")
   "i t" '(mabr/insert-current-timestamp :which-key "Insert Timestamp")
@@ -157,10 +161,10 @@
   "i d" '(powerthesaurus-lookup-definitions-dwim :which-key "Definitions")
   "i s" '(powerthesaurus-lookup-synonyms-dwim :which-key "Synonyms")
   "i a" '(powerthesaurus-lookup-dwim :which-key "Alternative Word")
-  
+
   "c" '(:ignore t :which-key "Modes")
   "c s" 'flyspell-mode
-  
+
   "?" '(:ignore t :which-key "Describe")
   "? v" 'describe-variable
   "? f" 'describe-function
@@ -168,10 +172,10 @@
   "? m" 'describe-mode
   "? k" 'describe-key
   "? F" 'describe-face
-  "? w" 'dictcc-at-point 
+  "? w" 'dictcc-at-point
   )
 
-  (use-package hydra)
+(use-package hydra)
 (defhydra hydra-text-scale (:timeout 4)
   "scale Text"
   ("j" text-scale-increase "in")

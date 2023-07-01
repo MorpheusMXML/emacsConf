@@ -183,6 +183,7 @@
   "SPC g D" 'lsp-find-declaration
   "SPC g t" 'lsp-goto-type-definition
   "SPC r" 'lsp-rename
+  "SPC h" 'lsp-ui-doc-show
   "SPC d" 'lsp-ui-doc-toggle
   "SPC i" 'imenu
   "SPC t" 'lsp-treemacs-errors-list

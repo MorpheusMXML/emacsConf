@@ -37,7 +37,7 @@
   (setq evil-want-C-i-jump nil)
   :config
   (evil-mode t)
-  ;use j and k to jump to next Visual line if line is split and not jump to actual Line
+					;use j and k to jump to next Visual line if line is split and not jump to actual Line
   (evil-global-set-key 'motion "j" 'evil-next-visual-line)
   (evil-global-set-key 'motion "k" 'evil-previous-visual-line))
 
@@ -63,7 +63,7 @@
 
 ;; -----------------------------------------------------------------------------------------------------------
 ;; EVIL-NERD-COMMENTER
-(use-package evil-nerd-commenter)	
+(use-package evil-nerd-commenter)
 ;;Define M-; as standard Keys for comm/uncomm Lines or Blocks
 (evilnc-default-hotkeys)
 
@@ -120,7 +120,7 @@
   (interactive)
   (let* ((dict ispell-current-dictionary)
          (new (if (string= dict "de_DE") "en_US"
-                   "de_DE")))
+                "de_DE")))
     (ispell-change-dictionary new)
     (message "Switched dictionary from %s to %s" dict new)))
 
@@ -150,7 +150,7 @@
 ;; variables
 (setq evil-collection-setup-minibuffer t
       evil-collection-mode-list
-      '(ibuffer help calc nov man calendar ivy minibuffer dired debug calc company dashboard elisp-mode epa flycheck forge help helpful imenu imenu-list js2-mode mu4e (pdf pdf-view) vterm vundo which-key 
+      '(ibuffer help calc nov man calendar ivy minibuffer dired debug calc company dashboard elisp-mode epa flycheck forge help helpful imenu imenu-list js2-mode mu4e (pdf pdf-view) vterm vundo which-key
 		doc-view arc-mode magit vterm))
 ;; start mode
 (evil-collection-init)
@@ -227,6 +227,16 @@
 (setq aw-scope 'frame
       aw-keys '(?1 ?2 ?3 ?4 ?5 ?6 ?7 ?8 ?9))
 
+;; -----------------------------------------------------------------------------------------------------------
+;; LINK-HINT
+(use-package link-hint
+  :ensure t
+  :defer t)
+
+(setq link-hint-avy-style 'pre)
+
+(setq browse-url-generic-program "/opt/homebrew/bin/qutebrowser")
+(setq browse-url-generic-args '("--target" "tab"))
 ;; MESSAGE BUFFER:
 (evil-initial-state 'message-mode 'normal)
 
