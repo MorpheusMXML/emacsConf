@@ -189,17 +189,17 @@
                     (mu4e-sent-folder . "/uhhmail/Gesendete Elemente")
                     (mu4e-trash-folder . "/uhhmail/Gel&APY-schte Elemente")))
 
-	  ,(make-mu4e-context 
+	  ,(make-mu4e-context
 	    :name "fbi"
 	    :enter-func
             (lambda () (mu4e-message "Entering fbi Mail..."))
             :leave-func
             (lambda () (mu4e-message "Leaveing fbi Mail ..."))
 	    :match-func
-	    (lambda (msg) 
-	      (when msg 
+	    (lambda (msg)
+	      (when msg
 		(mu4e-message-contact-field-matches msg
-						    `(:to :cc :from) "6brosius@informatik.uni-hamburg.de"))) 
+						    `(:to :cc :from) "6brosius@informatik.uni-hamburg.de")))
 	    :vars `((user-mail-address . "6brosius@informatik.uni-hamburg.de")
 		    (user-full-name . "Maximilian Brosius")
                     ;; check your ~/.maildir to see how the subdirectories are called
@@ -207,24 +207,24 @@
                     (mu4e-refile-folder . "/uhhmail/Archiv")
                     (mu4e-sent-folder . "/uhhmail/Gesendete Elemente")
                     (mu4e-trash-folder . "/uhhmail/Gel&APY-schte Elemente")))
-	  ,(make-mu4e-context 
+	  ,(make-mu4e-context
 	    :name "studium"
 	    :enter-func
             (lambda () (mu4e-message "Entering studium Mail..."))
             :leave-func
             (lambda () (mu4e-message "Leaveing studium Mail ..."))
 	    :match-func
-	    (lambda (msg) 
-	      (when msg 
+	    (lambda (msg)
+	      (when msg
 		(mu4e-message-contact-field-matches msg
-						    `(:to :cc :from) "maximilian.brosius@studium.uni-hamburg.de"))) 
+						    `(:to :cc :from) "maximilian.brosius@studium.uni-hamburg.de")))
 	    :vars `((user-mail-address . "maximilian.brosius@studium.uni-hamburg.de")
 		    (user-full-name . "Maximilian Brosius")
                     ;; check your ~/.maildir to see how the subdirectories are called
                     (mu4e-drafts-folder . "/uhhmail/Entw&APw-rfe")
                     (mu4e-refile-folder . "/uhhmail/Archiv")
                     (mu4e-sent-folder . "/uhhmail/Gesendete Elemente")
-                    (mu4e-trash-folder . "/uhhmail/Gel&APY-schte Elemente"))) 
+                    (mu4e-trash-folder . "/uhhmail/Gel&APY-schte Elemente")))
 
 	  ))
 
@@ -361,6 +361,7 @@
 			      (concat
 			       "Maximilian Brosius\n"
 			       "In urgent cases don't use E-Mail - call me 2x!!\n"
+			       "-----------------------------------------------\n"
 			       "\n"
 			       "mail@maxbrosius.de\n"
 			       "+49 173 49 838 56\n"))
@@ -412,6 +413,8 @@ signature, in that order."
 ;;   (mu4e-icalendar-setup))
 
 (add-hook 'dired-mode-hook 'turn-on-gnus-dired-mode)
+
+
 
 (defun mabr/mu4e-view-save-all-attachments (&optional arg)
   "Save all attachments of a given message.

@@ -4,9 +4,45 @@
 
 
 (use-package lsp-grammarly
-  :hook (text-mode . (lambda ()
-		       (require 'lsp-grammarly)
-		       (lsp))))
+  :hook ((text-mode mu4e-compose-mode) . (lambda ()
+					   (require 'lsp-grammarly)
+					   (lsp))))
+
+
+(setq lsp-language-id-configuration
+      (append '((mu4e-compose-mode . "plaintext")) lsp-language-id-configuration))
+
+(setq lsp-grammarly-active-modes
+      (add-to-list 'lsp-grammarly-active-modes 'mu4e-compose-mode))
+
+;; (setq lsp-grammarly-server "grammarly-languageserver")
+
+;; (lsp-register-client
+;;  (make-lsp-client
+;;   :new-connection (lsp-stdio-connection '("grammarly-languageserver" "--stdio"))
+;;   :major-modes '(mu4e-compose-mode text-mode)
+;;   :server-id 'grammarly-ls
+;;   :priority -1))
+
+
+(lsp-register-client
+ (make-lsp-client
+  :new-connection (lsp-stdio-connection #'lsp-grammarly--server-command)
+  :initialization-options
+  `((clientId . ,lsp-grammarly-client-id)
+    (name . "Grammarly"))
+  :major-modes lsp-grammarly-active-modes
+  :priority -1
+  :add-on? t
+  :server-id 'grammarly-ls
+  :download-server-fn (lambda (_client callback error-callback _update?)
+                        (lsp-package-ensure 'grammarly-ls callback error-callback))
+  :after-open-fn #'lsp-grammarly--init
+  :async-request-handlers
+  (ht ("$/showError" #'lsp-grammarly--show-error)
+      ("$/updateDocumentState" #'lsp-grammarly--update-document-state))))
+
+
 
 ;; (setq auth-source-debug t)
 
